@@ -433,12 +433,23 @@
     .category-card::before {
       content: "";
       position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: linear-gradient(120deg, transparent 25%, rgba(255,255,255,.16) 48%, transparent 70%);
-      transform: translateX(-120%);
-      transition: transform .65s ease;
+      left: -70px;
+      bottom: 24px;
+      z-index: 4;
+      width: 64px;
+      height: 64px;
+      opacity: 0;
       pointer-events: none;
+      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%2300ff88' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cellipse cx='41' cy='44' rx='9' ry='15'/%3E%3Ccircle cx='41' cy='25' r='6'/%3E%3Cpath d='M41 19c0-12 11-17 18-12 8 6 3 14-4 13-6-1-7-7-3-11'/%3E%3Cpath d='M34 32 22 23l-8 3 7 6-8 5 10 2 11 7M48 32l12-9 8 3-7 6 8 5-10 2-11 7M33 42 18 48M33 49 17 59M49 42l15 6M49 49l16 10M35 57l-7 11M47 57l7 11'/%3E%3C/g%3E%3C/svg%3E");
+      filter: drop-shadow(0 0 8px rgba(0,255,136,.8));
+    }
+
+    @keyframes scorpionCross {
+      0% { left: -70px; bottom: 20px; opacity: 0; transform: rotate(-18deg) scale(.75); }
+      14% { opacity: .95; }
+      52% { bottom: 120px; transform: rotate(8deg) scale(1); }
+      84% { opacity: .95; }
+      100% { left: calc(100% + 15px); bottom: 210px; opacity: 0; transform: rotate(22deg) scale(.8); }
     }
 
     .category-name {
@@ -478,7 +489,7 @@
         transform: translateY(-10px) scale(1.012);
         box-shadow: 0 22px 46px rgba(0,0,0,.28);
       }
-      .category-card:hover::before { transform: translateX(120%); }
+      .category-card:hover::before { animation: scorpionCross 1.25s cubic-bezier(.2,.7,.25,1) both; }
       .category-card:hover::after { height: 230px; background: linear-gradient(transparent, rgba(0,0,0,.96)); }
       .category-card:hover .category-image { transform: scale(1.09); filter: contrast(1.04) saturate(1.08); }
       .category-card:hover .category-name { transform: translateY(-10px); letter-spacing: 4px; color: #00ff88; }
