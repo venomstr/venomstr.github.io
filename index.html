@@ -380,6 +380,18 @@
     .drawer-item-info { flex: 1; }
     .drawer-item-name { font-weight: 800; margin-bottom: 6px; }
     .drawer-item button { border: 0; background: #eee; padding: 7px 10px; cursor: pointer; }
+    .cart-item { align-items: flex-start; }
+    .cart-item-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
+    .cart-size { padding: 8px 10px; border: 1px solid #bbb; background: white; font-weight: 700; }
+    .quantity-control { display: flex; align-items: center; border: 1px solid #ccc; }
+    .quantity-control button { width: 34px; height: 34px; padding: 0; background: #f1f1f1; font-size: 18px; }
+    .quantity-control strong { min-width: 35px; text-align: center; }
+    .cart-remove { color: #b00020; background: transparent !important; padding: 7px 0 !important; }
+    .cart-summary { margin-top: 25px; padding-top: 20px; border-top: 2px solid #111; }
+    .cart-total { display: flex; justify-content: space-between; font-size: 21px; font-weight: 900; margin-bottom: 16px; }
+    .checkout-button { display: block; width: 100%; padding: 17px; background: #00ff88; color: #000; text-align: center; text-decoration: none; font-weight: 900; }
+    .checkout-button:hover { background: #111; color: #fff; }
+    .cart-note { margin-top: 10px; color: #666; font-size: 12px; line-height: 1.5; }
     .product { position: relative; }
     .product-actions { display: flex; gap: 8px; padding: 0 18px 18px; }
     .product-actions button { flex: 1; border: 0; padding: 11px 8px; font-weight: 800; cursor: pointer; }
@@ -593,23 +605,43 @@
     }));
     let favorites = JSON.parse(localStorage.getItem('venomFavorites') || '[]');
     let cart = JSON.parse(localStorage.getItem('venomCart') || '[]');
+    let cartQuantities = JSON.parse(localStorage.getItem('venomCartQuantities') || '{}');
+    let cartSizes = JSON.parse(localStorage.getItem('venomCartSizes') || '{}');
     const drawer = document.getElementById('storeDrawer');
     const backdrop = document.getElementById('drawerBackdrop');
     const content = document.getElementById('drawerContent');
     const title = document.getElementById('drawerTitle');
     const money = value => '₺' + value.toLocaleString('tr-TR');
     const itemHtml = (p, type) => '<div class="drawer-item"><img src="' + p.image + '" alt=""><div class="drawer-item-info"><div class="drawer-item-name">' + p.name + '</div><strong>' + money(p.price) + '</strong></div>' + (type ? '<button type="button" data-remove="' + p.id + '" data-type="' + type + '">Kaldır</button>' : '') + '</div>';
-    function persist() { localStorage.setItem('venomFavorites', JSON.stringify(favorites)); localStorage.setItem('venomCart', JSON.stringify(cart)); document.getElementById('favoritesCount').textContent = favorites.length; document.getElementById('cartCount').textContent = cart.length; document.querySelectorAll('.product[data-id]').forEach(card => { const button=card.querySelector('.favorite-btn'); const active=favorites.includes(card.dataset.id); button.classList.toggle('active',active); button.textContent=active?'♥':'♡'; button.setAttribute('aria-label',active?'Favorilerden çıkar':'Favorilere ekle'); button.title=active?'Favorilerden çıkar':'Favorilere ekle'; }); }
-    function openDrawer(kind) { drawer.classList.add('open'); backdrop.classList.add('open'); drawer.setAttribute('aria-hidden','false'); if (kind === 'search') renderSearch(); if (kind === 'favorites') renderList('Favorilerim', favorites, 'favorite'); if (kind === 'cart') renderList('Sepetim', cart, 'cart'); }
+    function persist() { localStorage.setItem('venomFavorites', JSON.stringify(favorites)); localStorage.setItem('venomCart', JSON.stringify(cart)); localStorage.setItem('venomCartQuantities', JSON.stringify(cartQuantities)); localStorage.setItem('venomCartSizes', JSON.stringify(cartSizes)); document.getElementById('favoritesCount').textContent = favorites.length; document.getElementById('cartCount').textContent = cart.reduce((sum,id)=>sum+(cartQuantities[id]||1),0); document.querySelectorAll('.product[data-id]').forEach(card => { const button=card.querySelector('.favorite-btn'); const active=favorites.includes(card.dataset.id); button.classList.toggle('active',active); button.textContent=active?'♥':'♡'; button.setAttribute('aria-label',active?'Favorilerden çıkar':'Favorilere ekle'); button.title=active?'Favorilerden çıkar':'Favorilere ekle'; }); }
+    function openDrawer(kind) { drawer.classList.add('open'); backdrop.classList.add('open'); drawer.setAttribute('aria-hidden','false'); if (kind === 'search') renderSearch(); if (kind === 'favorites') renderList('Favorilerim', favorites, 'favorite'); if (kind === 'cart') renderCart(); }
     function closeDrawer() { drawer.classList.remove('open'); backdrop.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
     function renderSearch() { title.textContent = 'Ürün Ara'; content.innerHTML = '<input class="search-input" id="searchInput" type="search" placeholder="Ürün adı yazın..." autofocus><div id="searchResults">' + products.map(p => '<a class="product-link" href="' + p.url + '">' + itemHtml(p, '') + '</a>').join('') + '</div>'; document.getElementById('searchInput').addEventListener('input', e => { const q=e.target.value.toLocaleLowerCase('tr-TR'); document.getElementById('searchResults').innerHTML = products.filter(p=>p.name.toLocaleLowerCase('tr-TR').includes(q)).map(p=>'<a class="product-link" href="'+p.url+'">'+itemHtml(p,'')+'</a>').join('') || '<p class="empty-state">Ürün bulunamadı.</p>'; }); }
     function renderList(label, ids, type) { title.textContent=label; const list=ids.map(id=>products.find(p=>p.id===id)).filter(Boolean); content.innerHTML=list.map(p=>itemHtml(p,type)).join('') || '<p class="empty-state">Henüz ürün eklenmedi.</p>'; }
+    function renderCart() {
+      title.textContent='Sepetim';
+      const list=cart.map(id=>products.find(p=>p.id===id)).filter(Boolean);
+      if(!list.length){content.innerHTML='<p class="empty-state">Sepetiniz henüz boş.</p>';return;}
+      const rows=list.map(p=>{const qty=cartQuantities[p.id]||1;const size=cartSizes[p.id]||'M';return '<div class="drawer-item cart-item"><img src="'+p.image+'" alt=""><div class="drawer-item-info"><div class="drawer-item-name">'+p.name+'</div><strong>'+money(p.price*qty)+'</strong><div class="cart-item-controls"><select class="cart-size" data-size="'+p.id+'" aria-label="'+p.name+' beden"><option'+(size==='S'?' selected':'')+'>S</option><option'+(size==='M'?' selected':'')+'>M</option><option'+(size==='L'?' selected':'')+'>L</option><option'+(size==='XL'?' selected':'')+'>XL</option></select><div class="quantity-control"><button type="button" data-qty="minus" data-id="'+p.id+'" aria-label="Adedi azalt">−</button><strong>'+qty+'</strong><button type="button" data-qty="plus" data-id="'+p.id+'" aria-label="Adedi artır">+</button></div></div><button class="cart-remove" type="button" data-cart-remove="'+p.id+'">Ürünü kaldır</button></div></div>';}).join('');
+      const total=list.reduce((sum,p)=>sum+p.price*(cartQuantities[p.id]||1),0);
+      const lines=list.map((p,i)=>(i+1)+'. '+p.name+'\nBeden: '+(cartSizes[p.id]||'M')+'\nAdet: '+(cartQuantities[p.id]||1)+'\nTutar: '+money(p.price*(cartQuantities[p.id]||1))).join('\n\n');
+      const message='Merhaba, aşağıdaki ürünleri sipariş vermek istiyorum:\n\n'+lines+'\n\nToplam: '+money(total);
+      content.innerHTML=rows+'<div class="cart-summary"><div class="cart-total"><span>Toplam</span><span>'+money(total)+'</span></div><a class="checkout-button" href="https://wa.me/905302155210?text='+encodeURIComponent(message)+'" target="_blank" rel="noopener noreferrer">WHATSAPP’TAN SİPARİŞİ TAMAMLA</a><p class="cart-note">Siparişiniz WhatsApp üzerinden beden, adet ve toplam bilgileriyle hazırlanır.</p></div>';
+    }
     document.getElementById('searchButton').addEventListener('click',()=>openDrawer('search'));
     document.getElementById('favoritesButton').addEventListener('click',()=>openDrawer('favorites'));
     document.getElementById('cartButton').addEventListener('click',()=>openDrawer('cart'));
     document.getElementById('drawerClose').addEventListener('click',closeDrawer); backdrop.addEventListener('click',closeDrawer);
-    content.addEventListener('click',e=>{ const b=e.target.closest('[data-remove]'); if(!b)return; if(b.dataset.type==='favorite') favorites=favorites.filter(id=>id!==b.dataset.remove); else cart=cart.filter(id=>id!==b.dataset.remove); persist(); renderList(b.dataset.type==='favorite'?'Favorilerim':'Sepetim',b.dataset.type==='favorite'?favorites:cart,b.dataset.type); });
-    document.querySelectorAll('.product[data-id]').forEach(card=>{ card.querySelector('.favorite-btn').addEventListener('click',()=>{ const id=card.dataset.id; favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id]; persist(); }); card.querySelector('.cart-btn').addEventListener('click',()=>{ const id=card.dataset.id; if(!cart.includes(id)) cart.push(id); persist(); openDrawer('cart'); }); });
+    content.addEventListener('click',e=>{
+      const favoriteRemove=e.target.closest('[data-remove][data-type="favorite"]');
+      if(favoriteRemove){favorites=favorites.filter(id=>id!==favoriteRemove.dataset.remove);persist();renderList('Favorilerim',favorites,'favorite');return;}
+      const cartRemove=e.target.closest('[data-cart-remove]');
+      if(cartRemove){const id=cartRemove.dataset.cartRemove;cart=cart.filter(x=>x!==id);delete cartQuantities[id];delete cartSizes[id];persist();renderCart();return;}
+      const qtyButton=e.target.closest('[data-qty]');
+      if(qtyButton){const id=qtyButton.dataset.id;const current=cartQuantities[id]||1;cartQuantities[id]=qtyButton.dataset.qty==='plus'?current+1:Math.max(1,current-1);persist();renderCart();}
+    });
+    content.addEventListener('change',e=>{const sizeSelect=e.target.closest('[data-size]');if(!sizeSelect)return;cartSizes[sizeSelect.dataset.size]=sizeSelect.value;persist();renderCart();});
+    document.querySelectorAll('.product[data-id]').forEach(card=>{ card.querySelector('.favorite-btn').addEventListener('click',()=>{ const id=card.dataset.id; favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id]; persist(); }); card.querySelector('.cart-btn').addEventListener('click',()=>{ const id=card.dataset.id; if(!cart.includes(id)){cart.push(id);cartQuantities[id]=1;cartSizes[id]=cartSizes[id]||'M';}else{cartQuantities[id]=(cartQuantities[id]||1)+1;} persist(); openDrawer('cart'); }); });
     function filterCategory(category){ let shown=0; document.querySelectorAll('.product').forEach(card=>{ const show=card.dataset.category===category; card.style.display=show?'':'none'; if(show)shown++; }); let empty=document.getElementById('categoryEmpty'); if(!empty){empty=document.createElement('p');empty.id='categoryEmpty';empty.className='empty-state';document.getElementById('productGrid').appendChild(empty);} empty.style.display=shown?'none':'block'; empty.textContent='Bu kategoride ürünler yakında eklenecek.'; document.querySelector('.section-head h2').textContent=category==='ustgiyim'?'Üst Giyim':category==='altgiyim'?'Alt Giyim':category==='disgiyim'?'Dış Giyim':'Aksesuar'; document.getElementById('urunler').scrollIntoView(); }
     document.querySelectorAll('a[href="#ustgiyim"],a[href="#altgiyim"],a[href="#disgiyim"],a[href="#aksesuar"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();filterCategory(a.getAttribute('href').slice(1));}));
     document.querySelectorAll('.category-card[data-category]').forEach(card=>{ const go=()=>filterCategory(card.dataset.category); card.addEventListener('click',go); card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}}); });
