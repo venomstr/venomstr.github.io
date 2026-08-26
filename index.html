@@ -15,7 +15,7 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 92px;
+      scroll-padding-top: 90px;
     }
 
     body {
@@ -26,8 +26,8 @@
 
     header {
       width: 100%;
-      height: 92px;
-      padding: 0 3%;
+      height: 90px;
+      padding: 0 4%;
       background: #050505;
       display: flex;
       align-items: center;
@@ -53,13 +53,13 @@
     nav {
       display: flex;
       align-items: center;
-      gap: 30px;
+      gap: 28px;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       transition: 0.2s;
     }
@@ -80,18 +80,20 @@
       color: white;
       display: flex;
       align-items: center;
-      gap: 20px;
-      font-size: 23px;
+      gap: 18px;
+      font-size: 22px;
     }
 
+    /* HERO */
+
     .hero {
-      min-height: 360px;
-      padding: 50px 20px;
+      min-height: 380px;
+      padding: 55px 20px;
       background:
         linear-gradient(
           90deg,
-          rgba(0, 0, 0, 0.96),
-          rgba(0, 0, 0, 0.75)
+          rgba(0, 0, 0, 0.97),
+          rgba(0, 0, 0, 0.78)
         );
       display: flex;
       align-items: center;
@@ -136,7 +138,7 @@
       margin-top: 30px;
       padding: 18px 34px;
       background: #00ff88;
-      color: #000;
+      color: black;
       text-decoration: none;
       font-weight: 900;
       transition: 0.2s;
@@ -145,6 +147,8 @@
     .hero-button:hover {
       background: white;
     }
+
+    /* KATEGORİLER */
 
     .categories {
       width: 100%;
@@ -155,7 +159,7 @@
     }
 
     .category-card {
-      height: 540px;
+      height: 500px;
       background: #d9d9d9;
       position: relative;
       overflow: hidden;
@@ -196,7 +200,7 @@
       background:
         linear-gradient(
           transparent,
-          rgba(0, 0, 0, 0.85)
+          rgba(0, 0, 0, 0.88)
         );
       pointer-events: none;
     }
@@ -214,6 +218,8 @@
       letter-spacing: 2px;
     }
 
+    /* BANNER */
+
     .banner {
       padding: 42px 20px;
       background: #00ff88;
@@ -229,6 +235,8 @@
       margin-top: 8px;
       font-size: 16px;
     }
+
+    /* ÜRÜNLER */
 
     .products {
       padding: 70px 4%;
@@ -269,7 +277,7 @@
 
     .product:hover {
       transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
     }
 
     .product-link {
@@ -317,6 +325,8 @@
       font-weight: 900;
     }
 
+    /* WHATSAPP */
+
     .whatsapp {
       position: fixed;
       right: 22px;
@@ -325,11 +335,13 @@
       padding: 15px 20px;
       border-radius: 50px;
       background: #00ff88;
-      color: #000;
+      color: black;
       text-decoration: none;
       font-weight: 900;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     }
+
+    /* FOOTER */
 
     footer {
       padding: 55px 5%;
@@ -381,6 +393,8 @@
       font-size: 13px;
     }
 
+    /* TABLET */
+
     @media (max-width: 950px) {
       nav {
         display: none;
@@ -407,6 +421,8 @@
       }
     }
 
+    /* TELEFON */
+
     @media (max-width: 550px) {
       html {
         scroll-padding-top: 75px;
@@ -418,12 +434,12 @@
       }
 
       .logo {
-        font-size: 25px;
+        font-size: 24px;
       }
 
       .icons {
-        gap: 14px;
-        font-size: 20px;
+        gap: 13px;
+        font-size: 19px;
       }
 
       .hero {
@@ -511,8 +527,8 @@
 
         <img
           class="category-image"
-          src="vnmstr-tshirt.png"
-          alt="VNMSTR baskılı streetwear tişört"
+          src="vnmstr-model.png"
+          alt="VNMSTR üst giyim koleksiyonu"
         >
 
         <div class="category-name">
@@ -551,7 +567,9 @@
 
       <h2>VENOM STR</h2>
 
-      <p>Premium kalite, güçlü stil.</p>
+      <p>
+        Premium kalite, güçlü stil.
+      </p>
 
     </section>
 
@@ -569,20 +587,20 @@
 
       <div class="product-grid">
 
-        <!-- TIKLANDIĞINDA URUN.HTML SAYFASINI AÇAR -->
+        <!-- BİRİNCİ ÜRÜN -->
+
         <article class="product">
 
           <a
             class="product-link"
             href="urun.html"
-            aria-label="VNMSTR Streetwear T-Shirt ürününü aç"
           >
 
             <div class="product-image">
 
               <img
-                src="vnmstr-tshirt.png"
-                alt="VNMSTR baskılı streetwear tişört"
+                src="vnmstr-model.png"
+                alt="VNMSTR Streetwear T-Shirt"
               >
 
             </div>
@@ -603,16 +621,52 @@
 
         </article>
 
+        <!-- İKİNCİ ÜRÜN -->
+
+        <article class="product">
+
+          <a
+            class="product-link"
+            href="urun-cobra.html"
+          >
+
+            <div class="product-image">
+
+              <img
+                src="vnmstr-cobra.png"
+                alt="VNMSTR Cobra Oversize T-Shirt"
+              >
+
+            </div>
+
+            <div class="product-info">
+
+              <div class="product-name">
+                VNMSTR Cobra Oversize T-Shirt
+              </div>
+
+              <div class="product-price">
+                ₺699
+              </div>
+
+            </div>
+
+          </a>
+
+        </article>
+
+        <!-- BOŞ ÜRÜN -->
+
         <article class="product">
 
           <div class="product-image">
-            ÜRÜN FOTOĞRAFI
+            YENİ ÜRÜN
           </div>
 
           <div class="product-info">
 
             <div class="product-name">
-              Yeni Ürün
+              Yakında
             </div>
 
             <div class="product-price">
@@ -623,36 +677,18 @@
 
         </article>
 
+        <!-- BOŞ ÜRÜN -->
+
         <article class="product">
 
           <div class="product-image">
-            ÜRÜN FOTOĞRAFI
+            YENİ ÜRÜN
           </div>
 
           <div class="product-info">
 
             <div class="product-name">
-              Yeni Ürün
-            </div>
-
-            <div class="product-price">
-              ₺0
-            </div>
-
-          </div>
-
-        </article>
-
-        <article class="product">
-
-          <div class="product-image">
-            ÜRÜN FOTOĞRAFI
-          </div>
-
-          <div class="product-info">
-
-            <div class="product-name">
-              Yeni Ürün
+              Yakında
             </div>
 
             <div class="product-price">
