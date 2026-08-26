@@ -224,9 +224,16 @@
       color: white;
     }
 
+    .purchase-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .add-cart-button,
     .order-button {
       width: 100%;
-      margin-top: 30px;
       padding: 19px 24px;
       background: #00ff88;
       color: #050505;
@@ -238,9 +245,41 @@
       transition: 0.2s;
     }
 
+    .add-cart-button {
+      border: 2px solid #050505;
+      background: #050505;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 900;
+      transition: .2s;
+    }
+
+    .add-cart-button:hover {
+      background: white;
+      color: #050505;
+    }
+
     .order-button:hover {
       background: #050505;
       color: white;
+    }
+
+    .cart-feedback {
+      display: none;
+      margin-top: 12px;
+      padding: 13px 16px;
+      background: #e8fff4;
+      border-left: 4px solid #00a95b;
+      color: #064f31;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .cart-feedback.show { display: block; }
+
+    @media (max-width: 560px) {
+      .purchase-actions { grid-template-columns: 1fr; }
     }
 
     .features {
@@ -458,14 +497,11 @@
 
         </div>
 
-        <a
-          class="order-button"
-          href="https://wa.me/905302155210?text=Merhaba%2C%20VNMSTR%20Cobra%20Oversize%20T-Shirt%20sat%C4%B1n%20almak%20istiyorum.%20Fiyat%3A%20699%20TL."
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          WHATSAPP'TAN SİPARİŞ VER
-        </a>
+        <div class="purchase-actions">
+          <button class="add-cart-button" id="addCartButton" type="button">SEPETE EKLE</button>
+          <a class="order-button" id="whatsappOrderButton" href="#" target="_blank" rel="noopener noreferrer">WHATSAPP'TAN SİPARİŞ VER</a>
+        </div>
+        <div class="cart-feedback" id="cartFeedback" role="status" aria-live="polite"></div>
 
         <ul class="features">
           <li>Premium pamuklu kumaş</li>
@@ -530,6 +566,41 @@
 
       showImage(currentImage);
     }
+
+    const productData = {"id":"cobra","name":"VNMSTR Cobra Oversize T-Shirt","price":699,"image":"vnmstr-cobra.png","url":"urun-cobra.html"};
+
+    function selectedSize() {
+      return document.querySelector('input[name="beden"]:checked')?.value || 'M';
+    }
+
+    function updateWhatsAppLink() {
+      const message = [
+        'Merhaba, aşağıdaki ürünü sipariş vermek istiyorum:',
+        '',
+        'Ürün: ' + productData.name,
+        'Beden: ' + selectedSize(),
+        'Adet: 1',
+        'Toplam: ₺' + productData.price
+      ].join('\n');
+      document.getElementById('whatsappOrderButton').href = 'https://wa.me/905302155210?text=' + encodeURIComponent(message);
+    }
+
+    document.querySelectorAll('input[name="beden"]').forEach(input => input.addEventListener('change', updateWhatsAppLink));
+
+    document.getElementById('addCartButton').addEventListener('click', function() {
+      let cart = JSON.parse(localStorage.getItem('venomCart') || '[]');
+      if (!cart.includes(productData.id)) cart.push(productData.id);
+      localStorage.setItem('venomCart', JSON.stringify(cart));
+      const sizes = JSON.parse(localStorage.getItem('venomCartSizes') || '{}');
+      sizes[productData.id] = selectedSize();
+      localStorage.setItem('venomCartSizes', JSON.stringify(sizes));
+      const feedback = document.getElementById('cartFeedback');
+      feedback.textContent = productData.name + ' · ' + selectedSize() + ' beden sepete eklendi.';
+      feedback.classList.add('show');
+      this.textContent = '✓ SEPETE EKLENDİ';
+    });
+
+    updateWhatsAppLink();
   </script>
 
 </body>
