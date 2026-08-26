@@ -1,1 +1,536 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>VNMSTR Cobra Oversize T-Shirt | VENOM STR</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f4f4f4;
+      color: #111;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      min-height: 90px;
+      padding: 20px 4%;
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      color: white;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #00ff88;
+    }
+
+    .back-link {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      color: #00ff88;
+    }
+
+    main {
+      width: min(1200px, 92%);
+      margin: 45px auto 80px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 25px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .breadcrumb a {
+      color: #111;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .product-detail {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 55px;
+      align-items: start;
+    }
+
+    /* GÖRSEL GALERİSİ */
+
+    .gallery {
+      position: relative;
+    }
+
+    .main-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #ddd;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .gallery-arrow {
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      position: absolute;
+      top: calc(50% - 60px);
+      z-index: 5;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      cursor: pointer;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .gallery-arrow:hover {
+      background: #00ff88;
+      color: black;
+    }
+
+    .previous {
+      left: 15px;
+    }
+
+    .next {
+      right: 15px;
+    }
+
+    .thumbnails {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .thumbnail {
+      width: 90px;
+      height: 90px;
+      padding: 0;
+      border: 3px solid transparent;
+      background: #ddd;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .thumbnail.active {
+      border-color: #00ff88;
+    }
+
+    .thumbnail img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* ÜRÜN BİLGİLERİ */
+
+    .product-info {
+      position: sticky;
+      top: 30px;
+    }
+
+    .new-label {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 13px;
+      background: #00ff88;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 48px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      color: #666;
+    }
+
+    .price {
+      margin: 28px 0;
+      font-size: 36px;
+      font-weight: 900;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 28px 0;
+      background: #d2d2d2;
+    }
+
+    .description {
+      color: #444;
+      line-height: 1.8;
+    }
+
+    .size-title {
+      display: block;
+      margin-bottom: 13px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .sizes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .size input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .size span {
+      width: 52px;
+      height: 48px;
+      border: 1px solid #aaa;
+      background: white;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .size input:checked + span {
+      border-color: #050505;
+      background: #050505;
+      color: white;
+    }
+
+    .order-button {
+      width: 100%;
+      margin-top: 30px;
+      padding: 19px 24px;
+      background: #00ff88;
+      color: #050505;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 900;
+      transition: 0.2s;
+    }
+
+    .order-button:hover {
+      background: #050505;
+      color: white;
+    }
+
+    .features {
+      margin-top: 32px;
+      list-style: none;
+    }
+
+    .features li {
+      padding: 13px 0;
+      border-bottom: 1px solid #ddd;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .features li::before {
+      content: "✓";
+      margin-right: 10px;
+      color: #00a95b;
+      font-weight: 900;
+    }
+
+    .shipping {
+      margin-top: 28px;
+      padding: 20px;
+      background: #111;
+      color: white;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .shipping strong {
+      color: #00ff88;
+    }
+
+    footer {
+      padding: 32px 20px;
+      background: #050505;
+      color: #777;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 850px) {
+      header {
+        min-height: 75px;
+        padding: 18px 20px;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+
+      .back-link {
+        font-size: 13px;
+      }
+
+      main {
+        margin-top: 30px;
+      }
+
+      .product-detail {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .product-info {
+        position: static;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .gallery-arrow {
+        width: 42px;
+        height: 42px;
+        top: calc(50% - 55px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+
+    <a class="logo" href="index.html">
+      VENOM <span>STR</span>
+    </a>
+
+    <a class="back-link" href="index.html#urunler">
+      ← Ürünlere Dön
+    </a>
+
+  </header>
+
+  <main>
+
+    <div class="breadcrumb">
+      <a href="index.html">Ana Sayfa</a>
+      / Üst Giyim / VNMSTR Cobra Oversize T-Shirt
+    </div>
+
+    <section class="product-detail">
+
+      <div class="gallery">
+
+        <img
+          id="mainImage"
+          class="main-image"
+          src="vnmstr-cobra.png"
+          alt="Model üzerinde VNMSTR Cobra tişört"
+        >
+
+        <button
+          class="gallery-arrow previous"
+          type="button"
+          onclick="changeImage(-1)"
+          aria-label="Önceki görsel"
+        >
+          ‹
+        </button>
+
+        <button
+          class="gallery-arrow next"
+          type="button"
+          onclick="changeImage(1)"
+          aria-label="Sonraki görsel"
+        >
+          ›
+        </button>
+
+        <div class="thumbnails">
+
+          <button
+            class="thumbnail active"
+            type="button"
+            onclick="showImage(0)"
+          >
+            <img
+              src="vnmstr-cobra.png"
+              alt="Model görünümü"
+            >
+          </button>
+
+          <button
+            class="thumbnail"
+            type="button"
+            onclick="showImage(1)"
+          >
+            <img
+              src="vnmstr-cobra-flat.png"
+              alt="Ürün görünümü"
+            >
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="product-info">
+
+        <span class="new-label">
+          YENİ KOLEKSİYON
+        </span>
+
+        <h1>
+          VNMSTR Cobra Oversize T-Shirt
+        </h1>
+
+        <p class="subtitle">
+          Oversize kesim · Kobra baskılı · Unisex
+        </p>
+
+        <div class="price">
+          ₺699
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="description">
+          Karanlık streetwear estetiğini neon yeşil kobra
+          grafiğiyle birleştiren VNMSTR Cobra T-Shirt,
+          güçlü ön ve arka baskısıyla öne çıkar. Tok dokulu
+          pamuklu kumaşı gün boyunca rahat kullanım sağlar.
+        </p>
+
+        <div class="divider"></div>
+
+        <span class="size-title">
+          BEDEN SEÇ
+        </span>
+
+        <div class="sizes">
+
+          <label class="size">
+            <input type="radio" name="beden" value="S">
+            <span>S</span>
+          </label>
+
+          <label class="size">
+            <input type="radio" name="beden" value="M" checked>
+            <span>M</span>
+          </label>
+
+          <label class="size">
+            <input type="radio" name="beden" value="L">
+            <span>L</span>
+          </label>
+
+          <label class="size">
+            <input type="radio" name="beden" value="XL">
+            <span>XL</span>
+          </label>
+
+        </div>
+
+        <a
+          class="order-button"
+          href="https://wa.me/905302155210?text=Merhaba%2C%20VNMSTR%20Cobra%20Oversize%20T-Shirt%20sat%C4%B1n%20almak%20istiyorum.%20Fiyat%3A%20699%20TL."
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WHATSAPP'TAN SİPARİŞ VER
+        </a>
+
+        <ul class="features">
+          <li>Premium pamuklu kumaş</li>
+          <li>Rahat oversize kalıp</li>
+          <li>Dayanıklı neon kobra baskısı</li>
+          <li>Unisex streetwear tasarım</li>
+          <li>30°C'de ters çevirerek yıkamaya uygun</li>
+        </ul>
+
+        <div class="shipping">
+          <strong>Hızlı teslimat:</strong>
+          Manisa merkezde uygun siparişlerde gün içi teslimat.
+          Türkiye'nin 81 iline güvenli kargo.
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 VENOM STR ® Premium Collection
+  </footer>
+
+  <script>
+    const productImages = [
+      {
+        src: "vnmstr-cobra.png",
+        alt: "Model üzerinde VNMSTR Cobra tişört"
+      },
+      {
+        src: "vnmstr-cobra-flat.png",
+        alt: "VNMSTR Cobra tişört ön ve arka ürün görünümü"
+      }
+    ];
+
+    let currentImage = 0;
+
+    function showImage(index) {
+      currentImage = index;
+
+      const mainImage = document.getElementById("mainImage");
+      const thumbnails = document.querySelectorAll(".thumbnail");
+
+      mainImage.src = productImages[currentImage].src;
+      mainImage.alt = productImages[currentImage].alt;
+
+      thumbnails.forEach(function(thumbnail, thumbnailIndex) {
+        if (thumbnailIndex === currentImage) {
+          thumbnail.classList.add("active");
+        } else {
+          thumbnail.classList.remove("active");
+        }
+      });
+    }
+
+    function changeImage(direction) {
+      currentImage =
+        (currentImage + direction + productImages.length) %
+        productImages.length;
+
+      showImage(currentImage);
+    }
+  </script>
+
+</body>
+</html>
