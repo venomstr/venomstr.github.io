@@ -403,6 +403,79 @@
     .category-card { cursor: pointer; border: 0; text-align: left; }
     .category-card:focus-visible { outline: 4px solid #00ff88; outline-offset: -4px; }
 
+
+    /* PROFESYONEL ETKİLEŞİMLER */
+    .category-card,
+    .product {
+      transition: transform .38s cubic-bezier(.2,.75,.25,1), box-shadow .38s ease;
+      will-change: transform;
+    }
+
+    .category-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(120deg, transparent 25%, rgba(255,255,255,.16) 48%, transparent 70%);
+      transform: translateX(-120%);
+      transition: transform .65s ease;
+      pointer-events: none;
+    }
+
+    .category-name {
+      transition: transform .35s ease, letter-spacing .35s ease, color .35s ease;
+    }
+
+    .product-info,
+    .product-price,
+    .product-actions button,
+    .tool-button,
+    .hero-button {
+      transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
+    }
+
+    nav a { position: relative; }
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: -9px;
+      height: 2px;
+      background: #00ff88;
+      transition: right .28s ease;
+    }
+
+    .category-card:active,
+    .product:active { transform: scale(.985); }
+
+    @media (hover: hover) and (pointer: fine) {
+      nav a:hover::after { right: 0; }
+      .tool-button:hover { transform: translateY(-2px) scale(1.1); color: #00ff88; }
+      .hero-button:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,255,136,.28); }
+
+      .category-card:hover {
+        z-index: 5;
+        transform: translateY(-10px) scale(1.012);
+        box-shadow: 0 22px 46px rgba(0,0,0,.28);
+      }
+      .category-card:hover::before { transform: translateX(120%); }
+      .category-card:hover::after { height: 230px; background: linear-gradient(transparent, rgba(0,0,0,.96)); }
+      .category-card:hover .category-image { transform: scale(1.09); filter: contrast(1.04) saturate(1.08); }
+      .category-card:hover .category-name { transform: translateY(-10px); letter-spacing: 4px; color: #00ff88; }
+
+      .product:hover {
+        z-index: 4;
+        transform: translateY(-10px);
+        box-shadow: 0 22px 46px rgba(0,0,0,.18);
+      }
+      .product:hover .product-image img { transform: scale(1.075); }
+      .product:hover .product-info { background: #0a0a0a; color: white; }
+      .product:hover .product-price { color: #00ff88; }
+      .product-actions button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,.16); }
+      .cart-btn:hover { background: #050505; color: #00ff88; }
+    }
+
     @media (max-width: 950px) {
       nav {
         display: none;
