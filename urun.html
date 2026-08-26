@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VNMSTR Streetwear T-Shirt ürün detayları ve sipariş sayfası.">
+  <title>VNMSTR Streetwear T-Shirt | VENOM STR</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f4f4f4;
+      color: #111;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      height: 92px;
+      padding: 0 4%;
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      color: #fff;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .logo span,
+    .accent {
+      color: #00ff88;
+    }
+
+    .back-link {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #00ff88;
+    }
+
+    main {
+      width: min(1180px, 92%);
+      margin: 55px auto 80px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 25px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .breadcrumb a {
+      color: #111;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .product-detail {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
+      gap: 60px;
+      align-items: start;
+    }
+
+    .image-panel {
+      min-height: 650px;
+      background: #e7e7e7;
+      overflow: hidden;
+    }
+
+    .image-panel img {
+      width: 100%;
+      height: 650px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      background: #00ff88;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      color: #666;
+      font-size: 16px;
+    }
+
+    .price {
+      margin: 28px 0;
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 28px 0;
+      background: #d2d2d2;
+    }
+
+    .description {
+      color: #444;
+      line-height: 1.75;
+    }
+
+    .option-title {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .sizes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .size input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .size span {
+      width: 52px;
+      height: 48px;
+      border: 1px solid #bbb;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .size input:checked + span {
+      border-color: #050505;
+      background: #050505;
+      color: #fff;
+    }
+
+    .order-button {
+      width: 100%;
+      margin-top: 30px;
+      padding: 19px 24px;
+      border: 0;
+      background: #00ff88;
+      color: #050505;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 900;
+      transition: background .2s, color .2s;
+    }
+
+    .order-button:hover {
+      background: #050505;
+      color: #fff;
+    }
+
+    .features {
+      margin-top: 34px;
+      list-style: none;
+    }
+
+    .features li {
+      padding: 13px 0;
+      border-bottom: 1px solid #ddd;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .features li::before {
+      content: "✓";
+      margin-right: 10px;
+      color: #00a95b;
+      font-weight: 900;
+    }
+
+    .shipping {
+      margin-top: 28px;
+      padding: 20px;
+      background: #111;
+      color: #fff;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    footer {
+      padding: 30px 20px;
+      background: #050505;
+      color: #777;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 820px) {
+      header {
+        height: 75px;
+        padding: 0 20px;
+      }
+
+      .logo {
+        font-size: 25px;
+      }
+
+      .back-link {
+        font-size: 14px;
+      }
+
+      main {
+        margin-top: 30px;
+      }
+
+      .product-detail {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .image-panel,
+      .image-panel img {
+        min-height: 0;
+        height: min(125vw, 600px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">VENOM <span>STR</span></a>
+    <a class="back-link" href="index.html#urunler">← Ürünlere Dön</a>
+  </header>
+
+  <main>
+    <div class="breadcrumb">
+      <a href="index.html">Ana Sayfa</a> / Üst Giyim / VNMSTR Streetwear T-Shirt
+    </div>
+
+    <section class="product-detail">
+      <div class="image-panel">
+        <img src="vnmstr-tshirt.png" alt="VNMSTR arka baskılı streetwear tişört">
+      </div>
+
+      <div class="product-content">
+        <span class="label">YENİ KOLEKSİYON</span>
+        <h1>VNMSTR Streetwear T-Shirt</h1>
+        <p class="subtitle">Oversize kesim · Arka baskılı · Unisex</p>
+        <div class="price">₺699</div>
+
+        <div class="divider"></div>
+
+        <p class="description">
+          Sokak stilinden ilham alan VNMSTR T-Shirt, güçlü arka baskısı ve rahat
+          oversize kalıbıyla günlük kombinlere karakter katar. Tok dokulu pamuklu
+          kumaşı gün boyu konfor ve uzun süreli kullanım için tasarlanmıştır.
+        </p>
+
+        <div class="divider"></div>
+
+        <span class="option-title">BEDEN SEÇ</span>
+        <div class="sizes" aria-label="Beden seçimi">
+          <label class="size"><input type="radio" name="beden" value="S"><span>S</span></label>
+          <label class="size"><input type="radio" name="beden" value="M" checked><span>M</span></label>
+          <label class="size"><input type="radio" name="beden" value="L"><span>L</span></label>
+          <label class="size"><input type="radio" name="beden" value="XL"><span>XL</span></label>
+        </div>
+
+        <a
+          class="order-button"
+          href="https://wa.me/905302155210?text=Merhaba%2C%20VNMSTR%20Streetwear%20T-Shirt%20sat%C4%B1n%20almak%20istiyorum.%20Fiyat%3A%20699%20TL."
+          target="_blank"
+          rel="noopener noreferrer"
+        >WHATSAPP'TAN SİPARİŞ VER</a>
+
+        <ul class="features">
+          <li>Premium, tok dokulu pamuklu kumaş</li>
+          <li>Rahat ve modern oversize kalıp</li>
+          <li>Yüksek dayanımlı VNMSTR arka baskı</li>
+          <li>Günlük kullanıma uygun unisex tasarım</li>
+          <li>30°C'de ters çevirerek yıkamaya uygun</li>
+        </ul>
+
+        <div class="shipping">
+          <strong class="accent">Hızlı teslimat:</strong> Manisa merkezde uygun
+          siparişlerde gün içi teslimat, Türkiye'nin 81 iline güvenli kargo.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 VENOM STR ® Premium Collection</footer>
+</body>
+</html>
