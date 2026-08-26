@@ -1,17 +1,261 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VENOM STR</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VENOM STR | Premium Collection</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#080808;
+    color:white;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ÜST MENÜ */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 7%;
+    border-bottom:1px solid #1d1d1d;
+    background:#080808;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.logo span{
+    color:#00ff88;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+    font-size:14px;
+}
+
+/* ANA EKRAN */
+
+.hero{
+    min-height:78vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:30px;
+}
+
+.hero .premium{
+    color:#00ff88;
+    letter-spacing:5px;
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:70px;
+    letter-spacing:8px;
+    font-weight:900;
+}
+
+.hero h2{
+    font-size:22px;
+    margin-top:10px;
+    font-weight:400;
+    color:#aaa;
+}
+
+.hero p{
+    max-width:600px;
+    color:#888;
+    margin-top:25px;
+    line-height:1.7;
+}
+
+.buttons{
+    margin-top:35px;
+}
+
+.button{
+    display:inline-block;
+    padding:15px 30px;
+    margin:7px;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:4px;
+}
+
+.shop{
+    background:#00ff88;
+    color:#050505;
+}
+
+.whatsapp{
+    border:1px solid #00ff88;
+    color:#00ff88;
+}
+
+/* ÖZELLİKLER */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    padding:45px 7%;
+    background:#0e0e0e;
+    text-align:center;
+}
+
+.feature{
+    padding:25px;
+}
+
+.feature h3{
+    color:#00ff88;
+    margin-bottom:10px;
+}
+
+.feature p{
+    color:#888;
+    font-size:14px;
+}
+
+/* ALT */
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#555;
+    font-size:13px;
+}
+
+/* TELEFON */
+
+@media(max-width:700px){
+
+    nav{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:43px;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
-    <h1>VENOM STR</h1>
-    <h2>Premium Collection</h2>
+<header>
 
-    <p>VENOM STR resmi web sitesine hoş geldiniz</p>
+<div class="logo">
+VENOM <span>STR</span>
+</div>
+
+<nav>
+<a href="#">Ana Sayfa</a>
+<a href="#urunler">Ürünler</a>
+<a href="#iletisim">İletişim</a>
+</nav>
+
+</header>
+
+
+<section class="hero">
+
+<div class="premium">
+PREMIUM COLLECTION
+</div>
+
+<h1>VENOM STR</h1>
+
+<h2>Tarzını Zehrinle Göster</h2>
+
+<p>
+Premium erkek giyim koleksiyonlarımızı keşfedin
+Manisa içi hızlı teslimat ve Türkiye'nin 81 iline kargo
+</p>
+
+<div class="buttons">
+
+<a class="button shop" href="#urunler">
+ÜRÜNLERİ KEŞFET
+</a>
+
+<a class="button whatsapp"
+href="https://wa.me/905302155210">
+WHATSAPP
+</a>
+
+</div>
+
+</section>
+
+
+<section class="features" id="urunler">
+
+<div class="feature">
+
+<h3>PREMIUM ÜRÜNLER</h3>
+
+<p>
+Özenle seçilmiş erkek giyim koleksiyonları
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<h3>MANİSA HIZLI TESLİMAT</h3>
+
+<p>
+Manisa merkezde gün içi hızlı teslimat
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<h3>81 İLE KARGO</h3>
+
+<p>
+Siparişlerinizi Türkiye'nin her yerine gönderiyoruz
+</p>
+
+</div>
+
+</section>
+
+
+<footer id="iletisim">
+
+VENOM STR ® PREMIUM COLLECTION
+<br><br>
+WhatsApp 0530 215 52 10
+
+</footer>
 
 </body>
 </html>
