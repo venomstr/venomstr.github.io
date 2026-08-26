@@ -366,6 +366,29 @@
       font-size: 13px;
     }
 
+    .tool-button { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; padding: 6px; position: relative; }
+    .tool-count { position: absolute; top: -5px; right: -7px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: #00ff88; color: #000; font-size: 11px; line-height: 17px; font-weight: 900; }
+    .drawer-backdrop { position: fixed; inset: 0; z-index: 1200; background: rgba(0,0,0,.58); display: none; }
+    .drawer-backdrop.open { display: block; }
+    .drawer { position: fixed; top: 0; right: 0; z-index: 1201; width: min(430px, 92vw); height: 100%; background: #fff; padding: 28px; transform: translateX(105%); transition: transform .25s ease; overflow-y: auto; box-shadow: -12px 0 35px rgba(0,0,0,.25); }
+    .drawer.open { transform: translateX(0); }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+    .drawer-close { border: 0; background: #111; color: #fff; width: 36px; height: 36px; cursor: pointer; font-size: 22px; }
+    .search-input { width: 100%; padding: 14px 16px; border: 2px solid #111; font-size: 16px; margin-bottom: 18px; }
+    .drawer-item { display: flex; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid #ddd; }
+    .drawer-item img { width: 72px; height: 84px; object-fit: cover; background: #eee; }
+    .drawer-item-info { flex: 1; }
+    .drawer-item-name { font-weight: 800; margin-bottom: 6px; }
+    .drawer-item button { border: 0; background: #eee; padding: 7px 10px; cursor: pointer; }
+    .product { position: relative; }
+    .product-actions { display: flex; gap: 8px; padding: 0 18px 18px; }
+    .product-actions button { flex: 1; border: 0; padding: 11px 8px; font-weight: 800; cursor: pointer; }
+    .favorite-btn { background: #e9e9e9; }
+    .cart-btn { background: #00ff88; }
+    .empty-state { grid-column: 1 / -1; padding: 45px 20px; text-align: center; color: #666; background: #f7f7f7; }
+    .category-card { cursor: pointer; border: 0; text-align: left; }
+    .category-card:focus-visible { outline: 4px solid #00ff88; outline-offset: -4px; }
+
     @media (max-width: 950px) {
       nav {
         display: none;
@@ -454,15 +477,15 @@
     </nav>
 
     <div class="icons" aria-label="Mağaza araçları">
-      <span aria-hidden="true">⌕</span>
-      <span aria-hidden="true">♡</span>
-      <span class="cart-icon" aria-label="Sepet">
+      <button class="tool-button" id="searchButton" type="button" aria-label="Arama panelini aç">⌕</button>
+      <button class="tool-button" id="favoritesButton" type="button" aria-label="Favorileri aç">♡<span class="tool-count" id="favoritesCount">0</span></button>
+      <button class="tool-button cart-icon" id="cartButton" type="button" aria-label="Sepeti aç"><span class="tool-count" id="cartCount">0</span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M3 3h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 7H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="10" cy="20" r="1.4" fill="currentColor"/>
           <circle cx="18" cy="20" r="1.4" fill="currentColor"/>
         </svg>
-      </span>
+      </button>
     </div>
   </header>
 
@@ -481,17 +504,17 @@
     </section>
 
     <section class="categories" aria-label="Ürün kategorileri">
-      <article class="category-card" id="ustgiyim">
+      <article class="category-card" id="ustgiyim" tabindex="0" data-category="ustgiyim">
         <img class="category-image" src="vnmstr-tshirt.png" alt="VNMSTR baskılı streetwear tişört">
         <div class="category-name">ÜST GİYİM</div>
       </article>
 
-      <article class="category-card" id="altgiyim">
+      <article class="category-card" id="altgiyim" tabindex="0" data-category="altgiyim">
         <div class="category-placeholder">ALT GİYİM FOTOĞRAFI</div>
         <div class="category-name">ALT GİYİM</div>
       </article>
 
-      <article class="category-card" id="aksesuar">
+      <article class="category-card" id="aksesuar" tabindex="0" data-category="aksesuar">
         <div class="category-placeholder">AKSESUAR FOTOĞRAFI</div>
         <div class="category-name">AKSESUAR</div>
       </article>
@@ -509,8 +532,8 @@
         <a href="#urunler">Tümünü Gör →</a>
       </div>
 
-      <div class="product-grid">
-        <article class="product">
+      <div class="product-grid" id="productGrid">
+        <article class="product" data-category="ustgiyim" data-id="streetwear" data-name="VNMSTR Streetwear T-Shirt" data-price="699" data-image="vnmstr-tshirt.png" data-url="urun.html">
           <a class="product-link" href="urun.html" aria-label="VNMSTR Streetwear T-Shirt ürün detayını aç">
             <div class="product-image">
               <img src="vnmstr-tshirt.png" alt="VNMSTR baskılı streetwear tişört" loading="eager">
@@ -520,9 +543,10 @@
               <div class="product-price">₺699</div>
             </div>
           </a>
+          <div class="product-actions"><button class="favorite-btn" type="button">♡ Favori</button><button class="cart-btn" type="button">Sepete Ekle</button></div>
         </article>
 
-        <article class="product">
+        <article class="product" data-category="ustgiyim" data-id="cobra" data-name="VNMSTR Cobra Oversize T-Shirt" data-price="699" data-image="vnmstr-cobra.png" data-url="urun-cobra.html">
           <a class="product-link" href="urun-cobra.html" aria-label="VNMSTR Cobra Oversize T-Shirt ürün detayını aç">
             <div class="product-image">
               <img src="vnmstr-cobra.png" alt="VNMSTR Cobra Oversize T-Shirt">
@@ -532,9 +556,10 @@
               <div class="product-price">₺699</div>
             </div>
           </a>
+          <div class="product-actions"><button class="favorite-btn" type="button">♡ Favori</button><button class="cart-btn" type="button">Sepete Ekle</button></div>
         </article>
 
-        <article class="product">
+        <article class="product placeholder-product">
           <div class="product-image">ÜRÜN FOTOĞRAFI</div>
           <div class="product-info">
             <div class="product-name">Ürün Adı</div>
@@ -542,7 +567,7 @@
           </div>
         </article>
 
-        <article class="product">
+        <article class="product placeholder-product">
           <div class="product-image">ÜRÜN FOTOĞRAFI</div>
           <div class="product-info">
             <div class="product-name">Ürün Adı</div>
@@ -552,6 +577,43 @@
       </div>
     </section>
   </main>
+
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="storeDrawer" aria-hidden="true">
+    <div class="drawer-head"><h2 id="drawerTitle">Arama</h2><button class="drawer-close" id="drawerClose" type="button" aria-label="Paneli kapat">×</button></div>
+    <div id="drawerContent"></div>
+  </aside>
+
+  <script>
+    const products = [...document.querySelectorAll('.product[data-id]')].map(card => ({
+      id: card.dataset.id, name: card.dataset.name, price: Number(card.dataset.price), image: card.dataset.image, url: card.dataset.url, category: card.dataset.category, card
+    }));
+    let favorites = JSON.parse(localStorage.getItem('venomFavorites') || '[]');
+    let cart = JSON.parse(localStorage.getItem('venomCart') || '[]');
+    const drawer = document.getElementById('storeDrawer');
+    const backdrop = document.getElementById('drawerBackdrop');
+    const content = document.getElementById('drawerContent');
+    const title = document.getElementById('drawerTitle');
+    const money = value => '₺' + value.toLocaleString('tr-TR');
+    const itemHtml = (p, type) => '<div class="drawer-item"><img src="' + p.image + '" alt=""><div class="drawer-item-info"><div class="drawer-item-name">' + p.name + '</div><strong>' + money(p.price) + '</strong></div>' + (type ? '<button type="button" data-remove="' + p.id + '" data-type="' + type + '">Kaldır</button>' : '') + '</div>';
+    function persist() { localStorage.setItem('venomFavorites', JSON.stringify(favorites)); localStorage.setItem('venomCart', JSON.stringify(cart)); document.getElementById('favoritesCount').textContent = favorites.length; document.getElementById('cartCount').textContent = cart.length; }
+    function openDrawer(kind) { drawer.classList.add('open'); backdrop.classList.add('open'); drawer.setAttribute('aria-hidden','false'); if (kind === 'search') renderSearch(); if (kind === 'favorites') renderList('Favorilerim', favorites, 'favorite'); if (kind === 'cart') renderList('Sepetim', cart, 'cart'); }
+    function closeDrawer() { drawer.classList.remove('open'); backdrop.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+    function renderSearch() { title.textContent = 'Ürün Ara'; content.innerHTML = '<input class="search-input" id="searchInput" type="search" placeholder="Ürün adı yazın..." autofocus><div id="searchResults">' + products.map(p => '<a class="product-link" href="' + p.url + '">' + itemHtml(p, '') + '</a>').join('') + '</div>'; document.getElementById('searchInput').addEventListener('input', e => { const q=e.target.value.toLocaleLowerCase('tr-TR'); document.getElementById('searchResults').innerHTML = products.filter(p=>p.name.toLocaleLowerCase('tr-TR').includes(q)).map(p=>'<a class="product-link" href="'+p.url+'">'+itemHtml(p,'')+'</a>').join('') || '<p class="empty-state">Ürün bulunamadı.</p>'; }); }
+    function renderList(label, ids, type) { title.textContent=label; const list=ids.map(id=>products.find(p=>p.id===id)).filter(Boolean); content.innerHTML=list.map(p=>itemHtml(p,type)).join('') || '<p class="empty-state">Henüz ürün eklenmedi.</p>'; }
+    document.getElementById('searchButton').addEventListener('click',()=>openDrawer('search'));
+    document.getElementById('favoritesButton').addEventListener('click',()=>openDrawer('favorites'));
+    document.getElementById('cartButton').addEventListener('click',()=>openDrawer('cart'));
+    document.getElementById('drawerClose').addEventListener('click',closeDrawer); backdrop.addEventListener('click',closeDrawer);
+    content.addEventListener('click',e=>{ const b=e.target.closest('[data-remove]'); if(!b)return; if(b.dataset.type==='favorite') favorites=favorites.filter(id=>id!==b.dataset.remove); else cart=cart.filter(id=>id!==b.dataset.remove); persist(); renderList(b.dataset.type==='favorite'?'Favorilerim':'Sepetim',b.dataset.type==='favorite'?favorites:cart,b.dataset.type); });
+    document.querySelectorAll('.product[data-id]').forEach(card=>{ card.querySelector('.favorite-btn').addEventListener('click',()=>{ const id=card.dataset.id; favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id]; persist(); }); card.querySelector('.cart-btn').addEventListener('click',()=>{ const id=card.dataset.id; if(!cart.includes(id)) cart.push(id); persist(); openDrawer('cart'); }); });
+    function filterCategory(category){ let shown=0; document.querySelectorAll('.product').forEach(card=>{ const show=card.dataset.category===category; card.style.display=show?'':'none'; if(show)shown++; }); let empty=document.getElementById('categoryEmpty'); if(!empty){empty=document.createElement('p');empty.id='categoryEmpty';empty.className='empty-state';document.getElementById('productGrid').appendChild(empty);} empty.style.display=shown?'none':'block'; empty.textContent='Bu kategoride ürünler yakında eklenecek.'; document.querySelector('.section-head h2').textContent=category==='ustgiyim'?'Üst Giyim':category==='altgiyim'?'Alt Giyim':category==='disgiyim'?'Dış Giyim':'Aksesuar'; document.getElementById('urunler').scrollIntoView(); }
+    document.querySelectorAll('a[href="#ustgiyim"],a[href="#altgiyim"],a[href="#disgiyim"],a[href="#aksesuar"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();filterCategory(a.getAttribute('href').slice(1));}));
+    document.querySelectorAll('.category-card[data-category]').forEach(card=>{ const go=()=>filterCategory(card.dataset.category); card.addEventListener('click',go); card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}}); });
+    document.querySelectorAll('a[href="#urunler"]').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.product').forEach(p=>p.style.display=''); document.querySelector('.section-head h2').textContent='Son Eklenenler'; const empty=document.getElementById('categoryEmpty'); if(empty)empty.style.display='none';}));
+    persist();
+  </script>
 
   <a
     class="whatsapp"
@@ -591,4 +653,3 @@
   </footer>
 </body>
 </html>
-
