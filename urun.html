@@ -74,30 +74,77 @@
       align-items: start;
     }
 
-    .product-gallery {
-      display: grid;
-      gap: 18px;
+    /* GÖRSEL GALERİSİ */
+
+    .gallery {
+      position: relative;
     }
 
-    .image-panel {
+    .main-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
       background: #ddd;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .gallery-arrow {
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      position: absolute;
+      top: calc(50% - 60px);
+      z-index: 5;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      cursor: pointer;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .gallery-arrow:hover {
+      background: #00ff88;
+      color: black;
+    }
+
+    .previous {
+      left: 15px;
+    }
+
+    .next {
+      right: 15px;
+    }
+
+    .thumbnails {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .thumbnail {
+      width: 90px;
+      height: 90px;
+      padding: 0;
+      border: 3px solid transparent;
+      background: #ddd;
+      cursor: pointer;
       overflow: hidden;
     }
 
-    .image-panel img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
+    .thumbnail.active {
+      border-color: #00ff88;
     }
 
-    .image-caption {
-      padding: 12px 15px;
-      background: #111;
-      color: #aaa;
-      font-size: 12px;
-      letter-spacing: 0.5px;
+    .thumbnail img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
     }
+
+    /* ÜRÜN BİLGİLERİ */
 
     .product-info {
       position: sticky;
@@ -181,7 +228,6 @@
       width: 100%;
       margin-top: 30px;
       padding: 19px 24px;
-      border: none;
       background: #00ff88;
       color: #050505;
       display: block;
@@ -267,6 +313,12 @@
       h1 {
         font-size: 36px;
       }
+
+      .gallery-arrow {
+        width: 42px;
+        height: 42px;
+        top: calc(50% - 55px);
+      }
     }
   </style>
 </head>
@@ -294,33 +346,60 @@
 
     <section class="product-detail">
 
-      <div class="product-gallery">
+      <div class="gallery">
 
-        <figure class="image-panel">
+        <img
+          id="mainImage"
+          class="main-image"
+          src="vnmstr-model.png"
+          alt="Model üzerinde VNMSTR tişört"
+        >
 
-          <img
-            src="vnmstr-model.png"
-            alt="Model üzerinde VNMSTR tişörtün ön ve arka görünümü"
+        <button
+          class="gallery-arrow previous"
+          type="button"
+          onclick="changeImage(-1)"
+          aria-label="Önceki görsel"
+        >
+          ‹
+        </button>
+
+        <button
+          class="gallery-arrow next"
+          type="button"
+          onclick="changeImage(1)"
+          aria-label="Sonraki görsel"
+        >
+          ›
+        </button>
+
+        <div class="thumbnails">
+
+          <button
+            class="thumbnail active"
+            type="button"
+            onclick="showImage(0)"
+            aria-label="Model görselini göster"
           >
+            <img
+              src="vnmstr-model.png"
+              alt="Model görünümü"
+            >
+          </button>
 
-          <figcaption class="image-caption">
-            Model üzerinde ön ve arka görünüm
-          </figcaption>
-
-        </figure>
-
-        <figure class="image-panel">
-
-          <img
-            src="vnmstr-tshirt.png"
-            alt="VNMSTR streetwear tişört ürün görseli"
+          <button
+            class="thumbnail"
+            type="button"
+            onclick="showImage(1)"
+            aria-label="Ürün görselini göster"
           >
+            <img
+              src="vnmstr-tshirt.png"
+              alt="Ürün görünümü"
+            >
+          </button>
 
-          <figcaption class="image-caption">
-            Ürün görünümü
-          </figcaption>
-
-        </figure>
+        </div>
 
       </div>
 
@@ -348,7 +427,7 @@
           Sokak stilinden ilham alan VNMSTR Streetwear T-Shirt,
           güçlü arka baskısı ve rahat oversize kalıbıyla günlük
           kombinlere karakter katar. Tok dokulu pamuklu kumaşı
-          gün boyunca rahat ve konforlu kullanım sağlar.
+          gün boyunca rahat kullanım sağlar.
         </p>
 
         <div class="divider"></div>
@@ -391,22 +470,17 @@
         </a>
 
         <ul class="features">
-
           <li>Premium pamuklu kumaş</li>
           <li>Rahat oversize kalıp</li>
           <li>Dayanıklı VNMSTR arka baskı</li>
           <li>Unisex streetwear tasarım</li>
           <li>30°C'de ters çevirerek yıkamaya uygun</li>
-
         </ul>
 
         <div class="shipping">
-
           <strong>Hızlı teslimat:</strong>
-
           Manisa merkezde uygun siparişlerde gün içi teslimat.
           Türkiye'nin 81 iline güvenli kargo.
-
         </div>
 
       </div>
@@ -418,6 +492,47 @@
   <footer>
     © 2026 VENOM STR ® Premium Collection
   </footer>
+
+  <script>
+    const productImages = [
+      {
+        src: "vnmstr-model.png",
+        alt: "Model üzerinde VNMSTR tişörtün ön ve arka görünümü"
+      },
+      {
+        src: "vnmstr-tshirt.png",
+        alt: "VNMSTR Streetwear T-Shirt ürün görünümü"
+      }
+    ];
+
+    let currentImage = 0;
+
+    function showImage(index) {
+      currentImage = index;
+
+      const mainImage = document.getElementById("mainImage");
+      const thumbnails = document.querySelectorAll(".thumbnail");
+
+      mainImage.src = productImages[currentImage].src;
+      mainImage.alt = productImages[currentImage].alt;
+
+      thumbnails.forEach(function(thumbnail, thumbnailIndex) {
+        if (thumbnailIndex === currentImage) {
+          thumbnail.classList.add("active");
+        } else {
+          thumbnail.classList.remove("active");
+        }
+      });
+    }
+
+    function changeImage(direction) {
+      currentImage =
+        (currentImage + direction + productImages.length) %
+        productImages.length;
+
+      showImage(currentImage);
+    }
+  </script>
 
 </body>
 </html>
