@@ -186,6 +186,25 @@
       font-weight: bold;
     }
 
+    .coming-soon {
+      background: radial-gradient(circle at 25% 20%, #273a33 0, #101714 38%, #050505 100%);
+      color: rgba(255,255,255,.45);
+      text-align: center;
+      letter-spacing: 4px;
+      line-height: 1.8;
+    }
+    .coming-soon::before {
+      content: "VENOM STR";
+      position: absolute;
+      font-size: clamp(45px, 6vw, 96px);
+      font-weight: 900;
+      color: rgba(0,255,136,.055);
+      transform: rotate(-12deg);
+      white-space: nowrap;
+    }
+    .coming-soon span { position: relative; z-index: 1; font-size: 13px; font-weight: 800; }
+    .coming-soon small { color: #00ff88; font-size: 12px; }
+
     .category-card::after {
       content: "";
       position: absolute;
@@ -591,18 +610,33 @@
     </section>
 
     <section class="categories" aria-label="Ürün kategorileri">
-      <article class="category-card" id="ustgiyim" tabindex="0" data-category="ustgiyim">
-        <img class="category-image" src="vnmstr-tshirt.png" alt="VNMSTR baskılı streetwear tişört">
-        <div class="category-name">ÜST GİYİM</div>
+      <article class="category-card" id="tshirt" tabindex="0" data-category="tshirt">
+        <img class="category-image" src="vnmstr-model.png" alt="VENOM STR T-Shirt koleksiyonu">
+        <div class="category-name">T-SHIRT</div>
       </article>
 
-      <article class="category-card" id="altgiyim" tabindex="0" data-category="altgiyim">
-        <div class="category-placeholder">ALT GİYİM FOTOĞRAFI</div>
-        <div class="category-name">ALT GİYİM</div>
+      <article class="category-card" id="oversize" tabindex="0" data-category="oversize">
+        <img class="category-image" src="vnmstr-cobra.png" alt="VENOM STR Oversize T-Shirt koleksiyonu">
+        <div class="category-name">OVERSIZE T-SHIRT</div>
+      </article>
+
+      <article class="category-card" id="hoodie" tabindex="0" data-category="hoodie">
+        <div class="category-placeholder coming-soon"><span>YENİ KOLEKSİYON<br><small>YAKINDA</small></span></div>
+        <div class="category-name">HOODIE</div>
+      </article>
+
+      <article class="category-card" id="sweatshirt" tabindex="0" data-category="sweatshirt">
+        <div class="category-placeholder coming-soon"><span>YENİ KOLEKSİYON<br><small>YAKINDA</small></span></div>
+        <div class="category-name">SWEATSHIRT</div>
+      </article>
+
+      <article class="category-card" id="esofman" tabindex="0" data-category="esofman">
+        <div class="category-placeholder coming-soon"><span>YENİ KOLEKSİYON<br><small>YAKINDA</small></span></div>
+        <div class="category-name">EŞOFMAN ALTI</div>
       </article>
 
       <article class="category-card" id="aksesuar" tabindex="0" data-category="aksesuar">
-        <div class="category-placeholder">AKSESUAR FOTOĞRAFI</div>
+        <div class="category-placeholder coming-soon"><span>YENİ KOLEKSİYON<br><small>YAKINDA</small></span></div>
         <div class="category-name">AKSESUAR</div>
       </article>
     </section>
@@ -620,7 +654,7 @@
       </div>
 
       <div class="product-grid" id="productGrid">
-        <article class="product" data-category="ustgiyim" data-id="streetwear" data-name="VNMSTR Streetwear T-Shirt" data-price="699" data-image="vnmstr-tshirt.png" data-url="urun.html">
+        <article class="product" data-category="tshirt" data-id="streetwear" data-name="VNMSTR Streetwear T-Shirt" data-price="699" data-image="vnmstr-tshirt.png" data-url="urun.html">
           <a class="product-link" href="urun.html" aria-label="VNMSTR Streetwear T-Shirt ürün detayını aç">
             <div class="product-image">
               <img src="vnmstr-tshirt.png" alt="VNMSTR baskılı streetwear tişört" loading="eager">
@@ -633,7 +667,7 @@
           <div class="product-actions"><button class="favorite-btn" type="button" aria-label="Favorilere ekle" title="Favorilere ekle">♡</button><button class="cart-btn" type="button">Sepete Ekle</button></div>
         </article>
 
-        <article class="product" data-category="ustgiyim" data-id="cobra" data-name="VNMSTR Cobra Oversize T-Shirt" data-price="699" data-image="vnmstr-cobra.png" data-url="urun-cobra.html">
+        <article class="product" data-category="oversize" data-id="cobra" data-name="VNMSTR Cobra Oversize T-Shirt" data-price="699" data-image="vnmstr-cobra.png" data-url="urun-cobra.html">
           <a class="product-link" href="urun-cobra.html" aria-label="VNMSTR Cobra Oversize T-Shirt ürün detayını aç">
             <div class="product-image">
               <img src="vnmstr-cobra.png" alt="VNMSTR Cobra Oversize T-Shirt">
@@ -715,7 +749,7 @@
     });
     content.addEventListener('change',e=>{const sizeSelect=e.target.closest('[data-size]');if(!sizeSelect)return;cartSizes[sizeSelect.dataset.size]=sizeSelect.value;persist();renderCart();});
     document.querySelectorAll('.product[data-id]').forEach(card=>{ card.querySelector('.favorite-btn').addEventListener('click',()=>{ const id=card.dataset.id; favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id]; persist(); }); card.querySelector('.cart-btn').addEventListener('click',()=>{ const id=card.dataset.id; if(!cart.includes(id)){cart.push(id);cartQuantities[id]=1;cartSizes[id]=cartSizes[id]||'M';}else{cartQuantities[id]=(cartQuantities[id]||1)+1;} persist(); openDrawer('cart'); }); });
-    function filterCategory(category){ let shown=0; document.querySelectorAll('.product').forEach(card=>{ const show=card.dataset.category===category; card.style.display=show?'':'none'; if(show)shown++; }); let empty=document.getElementById('categoryEmpty'); if(!empty){empty=document.createElement('p');empty.id='categoryEmpty';empty.className='empty-state';document.getElementById('productGrid').appendChild(empty);} empty.style.display=shown?'none':'block'; empty.textContent='Bu kategoride ürünler yakında eklenecek.'; document.querySelector('.section-head h2').textContent=category==='ustgiyim'?'Üst Giyim':category==='altgiyim'?'Alt Giyim':category==='disgiyim'?'Dış Giyim':'Aksesuar'; document.getElementById('urunler').scrollIntoView(); }
+    function filterCategory(category){ const groups={ustgiyim:['tshirt','oversize','hoodie','sweatshirt'],altgiyim:['esofman'],disgiyim:['disgiyim'],aksesuar:['aksesuar']}; const allowed=groups[category]||[category]; let shown=0; document.querySelectorAll('.product').forEach(card=>{ const show=allowed.includes(card.dataset.category); card.style.display=show?'':'none'; if(show)shown++; }); let empty=document.getElementById('categoryEmpty'); if(!empty){empty=document.createElement('p');empty.id='categoryEmpty';empty.className='empty-state';document.getElementById('productGrid').appendChild(empty);} empty.style.display=shown?'none':'block'; empty.textContent='Bu kategoride ürünler yakında eklenecek.'; const labels={ustgiyim:'Üst Giyim',altgiyim:'Alt Giyim',disgiyim:'Dış Giyim',aksesuar:'Aksesuar',tshirt:'T-Shirt',oversize:'Oversize T-Shirt',hoodie:'Hoodie',sweatshirt:'Sweatshirt',esofman:'Eşofman Altı'}; document.querySelector('.section-head h2').textContent=labels[category]||'Koleksiyon'; document.getElementById('urunler').scrollIntoView(); }
     document.querySelectorAll('a[href="#ustgiyim"],a[href="#altgiyim"],a[href="#disgiyim"],a[href="#aksesuar"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();filterCategory(a.getAttribute('href').slice(1));}));
     document.querySelectorAll('.category-card[data-category]').forEach(card=>{ const go=()=>filterCategory(card.dataset.category); card.addEventListener('click',go); card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}}); });
     document.querySelectorAll('a[href="#urunler"]').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.product').forEach(p=>p.style.display=''); document.querySelector('.section-head h2').textContent='Son Eklenenler'; const empty=document.getElementById('categoryEmpty'); if(empty)empty.style.display='none';}));
