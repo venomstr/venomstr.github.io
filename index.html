@@ -230,19 +230,79 @@
     }
 
     .banner {
-      background: #00ff88;
-      padding: 42px 20px;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 54px 20px;
       text-align: center;
+      color: white;
+      background: linear-gradient(115deg, #020403 0%, #07130d 28%, #0a2b1e 50%, #06150f 72%, #020403 100%);
+      background-size: 220% 220%;
+      animation: venomGradient 9s ease-in-out infinite;
+      border-top: 1px solid rgba(0,255,136,.28);
+      border-bottom: 1px solid rgba(0,255,136,.28);
+    }
+
+    .banner::before {
+      content: "VENOM STR";
+      position: absolute;
+      z-index: -1;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%,-50%);
+      color: rgba(0,255,136,.045);
+      font-size: clamp(74px, 12vw, 190px);
+      font-weight: 900;
+      letter-spacing: 10px;
+      white-space: nowrap;
+      animation: venomPulse 4.5s ease-in-out infinite;
+    }
+
+    .banner::after {
+      content: "";
+      position: absolute;
+      inset: -80% auto -80% -28%;
+      width: 15%;
+      transform: rotate(16deg);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), rgba(0,255,136,.38), transparent);
+      filter: blur(4px);
+      animation: bannerLight 5.5s ease-in-out infinite;
+      pointer-events: none;
     }
 
     .banner h2 {
-      font-size: 34px;
+      position: relative;
+      z-index: 1;
+      color: #00ff88;
+      font-size: 38px;
       font-weight: 900;
+      letter-spacing: 4px;
+      text-shadow: 0 0 24px rgba(0,255,136,.28);
     }
 
     .banner p {
-      margin-top: 8px;
-      font-size: 16px;
+      position: relative;
+      z-index: 1;
+      margin-top: 10px;
+      color: #d5ded9;
+      font-size: 15px;
+      letter-spacing: 1.5px;
+    }
+
+    @keyframes venomGradient {
+      0%,100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes venomPulse {
+      0%,100% { opacity: .45; transform: translate(-50%,-50%) scale(.96); }
+      50% { opacity: 1; transform: translate(-50%,-50%) scale(1.035); }
+    }
+
+    @keyframes bannerLight {
+      0%,18% { left: -28%; opacity: 0; }
+      28% { opacity: 1; }
+      62% { left: 115%; opacity: .9; }
+      72%,100% { left: 115%; opacity: 0; }
     }
 
     .products {
