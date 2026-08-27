@@ -911,6 +911,126 @@
       .hero-small { letter-spacing:3px; }
     }
 
+
+    .mobile-menu-head { display:none; }
+    @media (max-width:1250px) {
+      header nav {
+        display:flex;
+        position:fixed;
+        inset:0;
+        width:100%;
+        height:100dvh;
+        padding:0 0 45px;
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        z-index:1400;
+        overflow-y:auto;
+        background:
+          radial-gradient(circle at 90% 4%, rgba(0,255,136,.12), transparent 25%),
+          linear-gradient(145deg,#06130e 0%,#020504 42%,#000 100%);
+        transform:translateY(-105%);
+        transition:transform .42s cubic-bezier(.76,0,.24,1);
+        box-shadow:none;
+      }
+      header nav.open { transform:translateY(0); }
+      header nav.open::before {
+        content:"";
+        position:fixed;
+        z-index:0;
+        top:0;
+        left:-35%;
+        width:28%;
+        height:100%;
+        pointer-events:none;
+        background:linear-gradient(90deg,transparent,rgba(0,255,136,.12),rgba(255,255,255,.08),transparent);
+        transform:skewX(-16deg);
+        animation:menuLight 1.25s ease-out both;
+      }
+      @keyframes menuLight { from{left:-40%} to{left:125%} }
+      .mobile-menu-head {
+        display:flex;
+        position:relative;
+        z-index:2;
+        min-height:118px;
+        padding:0 34px;
+        align-items:center;
+        justify-content:space-between;
+        border-bottom:1px solid rgba(255,255,255,.08);
+      }
+      .mobile-menu-title { display:flex; align-items:center; gap:14px; color:#fff; }
+      .mobile-menu-title span {
+        width:30px;
+        height:22px;
+        display:block;
+        background:linear-gradient(#fff 0 2px,transparent 2px 10px,#fff 10px 12px,transparent 12px 20px,#fff 20px 22px);
+        filter:drop-shadow(0 0 7px rgba(0,255,136,.22));
+      }
+      .mobile-menu-title strong { font-size:14px; letter-spacing:1px; }
+      #menuClose {
+        width:58px;
+        height:58px;
+        border:0;
+        background:transparent;
+        color:#aeb7b2;
+        font-size:61px;
+        font-weight:200;
+        line-height:.7;
+        cursor:pointer;
+        transition:.25s ease;
+      }
+      #menuClose:hover { color:#00ff88; transform:rotate(90deg); text-shadow:0 0 18px rgba(0,255,136,.5); }
+      header nav > a {
+        position:relative;
+        z-index:2;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        width:100%;
+        min-height:61px;
+        padding:0 36px;
+        border-bottom:1px solid rgba(255,255,255,.075);
+        color:#f0f2f1 !important;
+        font-size:17px;
+        font-weight:650;
+        letter-spacing:0;
+        text-transform:none;
+        overflow:hidden;
+        transition:color .25s ease,padding .25s ease,background .25s ease;
+      }
+      header nav > a::before {
+        content:"";
+        position:absolute;
+        inset:0;
+        z-index:-1;
+        background:linear-gradient(90deg,rgba(0,255,136,.15),rgba(0,255,136,.02),transparent 70%);
+        transform:translateX(-105%);
+        transition:transform .38s ease;
+      }
+      header nav > a:hover::before,
+      header nav > a:focus-visible::before { transform:translateX(0); }
+      header nav > a:hover,
+      header nav > a:focus-visible { color:#00ff88 !important; padding-left:44px; }
+      header nav > a:not(.new):not(.sale)::after {
+        content:"›";
+        color:#00ff88;
+        font-size:30px;
+        font-weight:300;
+        text-shadow:0 0 12px rgba(0,255,136,.55);
+        transition:transform .25s ease;
+      }
+      header nav > a:not(.new):not(.sale):hover::after { transform:translateX(5px); }
+      header nav > a.new { color:#00ff88 !important; }
+      header nav > a.sale { color:#fff !important; }
+      header nav > a.sale::after { content:"%"; color:#ff4960; font-weight:900; text-shadow:0 0 12px rgba(255,45,80,.45); }
+    }
+    @media (max-width:550px) {
+      .mobile-menu-head { min-height:96px; padding:0 24px; }
+      header nav > a { min-height:58px; padding:0 26px; font-size:16px; }
+      header nav > a:hover { padding-left:32px; }
+      #menuClose { font-size:52px; }
+    }
+
   </style>
 </head>
 
@@ -919,12 +1039,14 @@
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><i><span></span><span></span><span></span></i><b>MENÜ</b></button>
     <a class="logo" href="#anasayfa" aria-label="VENOM STR ana sayfa">VENOM STR</a>
     <nav id="mainNav" aria-label="Ana menü">
+      <div class="mobile-menu-head"><div class="mobile-menu-title"><span></span><strong>MENÜ</strong></div><button id="menuClose" type="button" aria-label="Menüyü kapat">×</button></div>
       <a class="new" href="#urunler">Son Eklenenler</a>
+      <a class="collection-link" href="#oversize">Cobra Collection</a>
+      <a class="sale" href="#indirim">Seçili Ürünlerde İndirim</a>
       <a href="#ustgiyim">Üst Giyim</a>
       <a href="#altgiyim">Alt Giyim</a>
       <a href="#disgiyim">Dış Giyim</a>
       <a href="#aksesuar">Aksesuar</a>
-      <a class="sale" href="#indirim">İndirim</a>
     </nav>
     <div class="icons" aria-label="Mağaza araçları">
       <button class="tool-button" id="searchButton" type="button" aria-label="Arama panelini aç">⌕</button>
@@ -1165,6 +1287,7 @@
     function closeMenu(){mainNav.classList.remove('open');menuToggle.classList.remove('open');menuToggle.setAttribute('aria-expanded','false');document.body.style.overflow='';}
     menuToggle.addEventListener('click',()=>{const open=!mainNav.classList.contains('open');mainNav.classList.toggle('open',open);menuToggle.classList.toggle('open',open);menuToggle.setAttribute('aria-expanded',String(open));document.body.style.overflow=open?'hidden':'';});
     mainNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+    document.getElementById('menuClose').addEventListener('click',closeMenu);
     document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();closeDrawer();}});
     persist();
   </script>
