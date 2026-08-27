@@ -779,13 +779,71 @@
       .cart-svg { width:23px !important; height:23px !important; }
     }
 
+
+    .logo {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      position:relative;
+      padding-bottom:9px;
+      transform:none;
+      font-family:Arial,Helvetica,sans-serif;
+      font-style:normal;
+      text-shadow:none;
+      letter-spacing:0;
+    }
+    .logo .logo-word {
+      color:#fff;
+      font-size:25px;
+      font-weight:950;
+      letter-spacing:2px;
+      line-height:1;
+    }
+    .logo > i {
+      width:2px;
+      height:23px;
+      display:block;
+      background:#00ff88;
+      box-shadow:0 0 12px rgba(0,255,136,.55);
+      transform:skew(-12deg);
+    }
+    .logo .logo-str {
+      color:#00ff88;
+      border:1px solid rgba(0,255,136,.55);
+      background:rgba(0,255,136,.06);
+      padding:3px 6px 2px;
+      font-size:18px;
+      font-weight:950;
+      letter-spacing:2px;
+      line-height:1;
+    }
+    .logo::after {
+      content:"STREETWEAR · 2026";
+      position:absolute;
+      left:50%;
+      bottom:-1px;
+      transform:translateX(-50%);
+      color:#7e8883;
+      font-size:6px;
+      font-weight:800;
+      letter-spacing:3px;
+      white-space:nowrap;
+    }
+    @media (max-width:600px) {
+      .logo { gap:6px; padding-bottom:7px; }
+      .logo .logo-word { font-size:18px; letter-spacing:1px; }
+      .logo > i { height:18px; }
+      .logo .logo-str { font-size:13px; padding:3px 4px 2px; letter-spacing:1px; }
+      .logo::after { font-size:5px; letter-spacing:2px; }
+    }
+
   </style>
 </head>
 
 <body id="anasayfa">
   <header>
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><i><span></span><span></span><span></span></i><b>MENÜ</b></button>
-    <a class="logo" href="#anasayfa" aria-label="VNMSTR ana sayfa">VNM<span>STR</span></a>
+    <a class="logo" href="#anasayfa" aria-label="VENOM STR ana sayfa"><span class="logo-word">VENOM</span><i aria-hidden="true"></i><span class="logo-str">STR</span></a>
     <nav id="mainNav" aria-label="Ana menü">
       <a class="new" href="#urunler">Son Eklenenler</a>
       <a href="#ustgiyim">Üst Giyim</a>
