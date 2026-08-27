@@ -721,13 +721,71 @@
       .icons { gap:14px; }
     }
 
+
+    header {
+      width:94%;
+      left:3%;
+      top:18px;
+      height:76px;
+      padding:0 24px;
+      background:rgba(10,12,11,.94);
+      border:1px solid rgba(255,255,255,.075);
+      box-shadow:0 12px 35px rgba(0,0,0,.28);
+    }
+    .logo {
+      font-family:"Arial Black",Impact,sans-serif;
+      font-size:27px;
+      font-style:italic;
+      letter-spacing:6px;
+      line-height:1;
+      transform:skew(-5deg);
+      text-shadow:0 0 22px rgba(0,255,136,.1);
+    }
+    .menu-toggle { width:auto; min-width:105px; height:46px; align-items:center; gap:12px; padding:6px 4px; font-family:inherit; }
+    .menu-toggle i { display:block; width:29px; font-style:normal; }
+    .menu-toggle i span { display:block; height:2px; background:#fff; margin:6px 0; transition:.25s ease; }
+    .menu-toggle b { color:#fff; font-size:12px; letter-spacing:1.5px; }
+    .menu-toggle.open i span:nth-child(1) { transform:translateY(8px) rotate(45deg); }
+    .menu-toggle.open i span:nth-child(2) { opacity:0; }
+    .menu-toggle.open i span:nth-child(3) { transform:translateY(-8px) rotate(-45deg); }
+    .icons { gap:13px; }
+    .tool-button { width:34px; height:38px; display:grid; place-items:center; padding:0; font-size:22px; line-height:1; position:relative; }
+    .cart-icon { min-width:34px; min-height:38px; }
+    .cart-svg { width:25px !important; height:25px !important; }
+    .tool-count {
+      top:-2px !important;
+      right:-3px !important;
+      min-width:18px !important;
+      height:18px !important;
+      padding:0 4px !important;
+      border-radius:9px !important;
+      font-size:10px !important;
+      line-height:18px !important;
+      box-shadow:0 0 0 2px #0a0c0b;
+    }
+    @media (max-width:1250px) {
+      header { width:94%; left:3%; top:18px; height:76px; padding:0 22px; }
+      .menu-toggle { display:flex; }
+      .logo { font-size:25px; letter-spacing:5px; }
+    }
+    @media (max-width:600px) {
+      header { width:calc(100% - 16px); left:8px; top:8px; height:66px; padding:0 10px; }
+      .menu-toggle { min-width:42px; width:42px; gap:0; }
+      .menu-toggle b { display:none; }
+      .menu-toggle i { width:27px; }
+      .logo { font-size:19px; letter-spacing:3px; }
+      .icons { gap:7px; }
+      .tool-button { width:31px; }
+      .cart-svg { width:23px !important; height:23px !important; }
+    }
+
   </style>
 </head>
 
 <body id="anasayfa">
   <header>
-    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span><span></span><span></span></button>
-    <a class="logo" href="#anasayfa" aria-label="VENOM STR ana sayfa">VENOM <span>STR</span></a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><i><span></span><span></span><span></span></i><b>MENÜ</b></button>
+    <a class="logo" href="#anasayfa" aria-label="VNMSTR ana sayfa">VNM<span>STR</span></a>
     <nav id="mainNav" aria-label="Ana menü">
       <a class="new" href="#urunler">Son Eklenenler</a>
       <a href="#ustgiyim">Üst Giyim</a>
