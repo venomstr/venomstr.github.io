@@ -858,6 +858,59 @@
       .logo { font-size:18px; letter-spacing:3px; transform:scaleX(1.04); }
     }
 
+
+    .hero {
+      min-height:720px;
+      background:#050505;
+      align-items:center;
+    }
+    .hero::before {
+      background-image:
+        linear-gradient(90deg, rgba(0,0,0,.02) 0%, rgba(0,0,0,.06) 47%, rgba(5,5,5,.72) 68%, #050505 88%),
+        linear-gradient(0deg, rgba(0,0,0,.48), transparent 32%),
+        url("vnmstr-cobra-flat.png");
+      background-size:100% 100%,100% 100%,72% auto;
+      background-position:center,center,4% center;
+      background-repeat:no-repeat;
+      transform:scale(1.002);
+      animation:heroDriftClean 14s ease-in-out infinite alternate;
+    }
+    @keyframes heroDriftClean { to { transform:scale(1.018); } }
+    .hero::after { content:none; display:none; }
+    .hero-inner {
+      width:32%;
+      max-width:500px;
+      margin:80px 6% 0 auto;
+      text-align:left;
+    }
+    .hero-small { font-size:10px; letter-spacing:5px; margin-bottom:17px; }
+    .hero h1 {
+      font-size:clamp(48px,5.6vw,84px);
+      line-height:.9;
+      letter-spacing:-2px;
+      max-width:500px;
+    }
+    .hero h2 { font-size:11px; letter-spacing:4px; margin-top:19px; }
+    .hero-button { margin-top:25px; padding:14px 20px; }
+    @media (max-width:950px) {
+      .hero { min-height:680px; align-items:flex-end; }
+      .hero::before {
+        background-image:
+          linear-gradient(0deg, #050505 4%, rgba(5,5,5,.84) 29%, rgba(0,0,0,.08) 66%),
+          linear-gradient(90deg, rgba(0,0,0,.12), rgba(0,0,0,.28)),
+          url("vnmstr-cobra-flat.png");
+        background-size:100% 100%,100% 100%,auto 100%;
+        background-position:center,center,center top;
+      }
+      .hero-inner { width:86%; max-width:560px; margin:0 auto 8%; text-align:left; }
+      .hero h1 { font-size:clamp(44px,11vw,72px); }
+    }
+    @media (max-width:550px) {
+      .hero { min-height:620px; }
+      .hero-inner { margin-bottom:10%; }
+      .hero-small { letter-spacing:3px; }
+    }
+
   </style>
 </head>
 
