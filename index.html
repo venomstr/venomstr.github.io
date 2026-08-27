@@ -837,13 +837,34 @@
       .logo::after { font-size:5px; letter-spacing:2px; }
     }
 
+
+    .logo {
+      display:block;
+      padding:0;
+      color:#24966f;
+      font-family:"Arial Narrow","Helvetica Neue",Arial,sans-serif;
+      font-size:24px;
+      font-weight:800;
+      font-style:normal;
+      line-height:1;
+      letter-spacing:5px;
+      white-space:nowrap;
+      transform:scaleX(1.08);
+      text-shadow:none;
+    }
+    .logo::after { content:none; display:none; }
+    .logo span,.logo i { display:none !important; }
+    @media (max-width:600px) {
+      .logo { font-size:18px; letter-spacing:3px; transform:scaleX(1.04); }
+    }
+
   </style>
 </head>
 
 <body id="anasayfa">
   <header>
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><i><span></span><span></span><span></span></i><b>MENÜ</b></button>
-    <a class="logo" href="#anasayfa" aria-label="VENOM STR ana sayfa"><span class="logo-word">VENOM</span><i aria-hidden="true"></i><span class="logo-str">STR</span></a>
+    <a class="logo" href="#anasayfa" aria-label="VENOM STR ana sayfa">VENOM STR</a>
     <nav id="mainNav" aria-label="Ana menü">
       <a class="new" href="#urunler">Son Eklenenler</a>
       <a href="#ustgiyim">Üst Giyim</a>
