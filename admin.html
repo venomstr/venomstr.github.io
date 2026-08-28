@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VENOM STR | Yönetim Paneli</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#050706;color:#f5f5f5;font-family:Arial,Helvetica,sans-serif}button,input,textarea,select{font:inherit}.top{height:76px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #173428;background:#070a08;position:sticky;top:0;z-index:10}.brand{font-weight:900;letter-spacing:.28em;font-size:21px}.brand span{color:#00f59b}.back{color:#b9c7c0;text-decoration:none;font-weight:700}.wrap{max-width:1180px;margin:auto;padding:36px 24px 70px}.login{max-width:520px;margin:9vh auto;background:#0b100d;border:1px solid #1d3d30;padding:38px}.eyebrow{color:#00f59b;font-size:12px;letter-spacing:.24em;font-weight:900}.login h1{font-size:38px;margin:12px 0}.muted{color:#9aa8a1;line-height:1.6}.field{display:grid;gap:8px;margin:18px 0}.field label{font-size:12px;letter-spacing:.08em;font-weight:800;color:#b8c5bf}.field input,.field textarea,.field select{width:100%;background:#050806;color:#fff;border:1px solid #294638;padding:14px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:#00f59b}.btn{border:0;background:#00f59b;color:#02150d;padding:14px 20px;font-weight:900;cursor:pointer}.btn:hover{filter:brightness(1.08)}.btn.secondary{background:#17241e;color:#eafff6}.btn.danger{background:#351417;color:#ff9ca3}.message{margin-top:14px;min-height:22px;color:#b9ffc9}.hidden{display:none!important}.head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin-bottom:26px}.head h1{font-size:42px;margin:6px 0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:25px}.stat{padding:18px;background:#0b100d;border:1px solid #173428}.stat strong{font-size:28px;display:block;color:#00f59b}.grid{display:grid;grid-template-columns:410px 1fr;gap:22px}.panel{background:#0b100d;border:1px solid #173428;padding:22px}.panel h2{margin:0 0 18px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.sizes{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.sizes input{text-align:center;padding:11px 4px}.checks{display:flex;gap:20px;margin:18px 0}.checks label{display:flex;align-items:center;gap:8px}.actions{display:flex;gap:9px;flex-wrap:wrap}.products{display:grid;gap:10px}.product{display:grid;grid-template-columns:74px 1fr auto;gap:14px;align-items:center;border:1px solid #1a3429;background:#070b09;padding:10px}.product img{width:74px;height:88px;object-fit:cover;background:#151b18}.product h3{margin:0 0 7px;font-size:16px}.tags{display:flex;gap:7px;flex-wrap:wrap}.tag{font-size:11px;background:#10241b;color:#a9f8ce;padding:5px 7px}.product .rowactions{display:flex;gap:6px}.iconbtn{border:1px solid #294638;background:#101813;color:#fff;padding:9px;cursor:pointer}.upload-note{font-size:12px;color:#7f9188}.empty{padding:30px;text-align:center;color:#8fa198;border:1px dashed #294638}.busy{opacity:.55;pointer-events:none}@media(max-width:850px){.grid{grid-template-columns:1fr}.head{align-items:start;flex-direction:column}.stats{grid-template-columns:1fr}.two{grid-template-columns:1fr}.product{grid-template-columns:62px 1fr}.product img{width:62px;height:74px}.product .rowactions{grid-column:1/-1}.top{padding:0 16px}.wrap{padding:24px 14px}.sizes{grid-template-columns:repeat(5,minmax(48px,1fr))}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="brand">VENOM <span>STR</span></div><a class="back" href="index.html">← Mağazaya dön</a></header>
+  <main class="wrap">
+    <section id="loginView" class="login">
+      <div class="eyebrow">GÜVENLİ YÖNETİM</div><h1>Panel Girişi</h1>
+      <p class="muted">Şifre gerekmez. Yetkili e-posta adresine tek kullanımlık giriş bağlantısı gönderilir.</p>
+      <div class="field"><label>E-POSTA</label><input id="loginEmail" type="email" autocomplete="email" placeholder="E-posta adresin"></div>
+      <button id="loginButton" class="btn">GİRİŞ BAĞLANTISI GÖNDER</button><div id="loginMessage" class="message"></div>
+    </section>
+
+    <section id="dashboard" class="hidden">
+      <div class="head"><div><div class="eyebrow">VENOM STR CONTROL</div><h1>Ürün Yönetimi</h1><p class="muted">Fotoğraf, fiyat ve S–XXL stoklarını tek yerden yönet.</p></div><button id="logoutButton" class="btn secondary">ÇIKIŞ YAP</button></div>
+      <div class="stats"><div class="stat"><strong id="totalCount">0</strong>Toplam ürün</div><div class="stat"><strong id="activeCount">0</strong>Yayındaki ürün</div><div class="stat"><strong id="stockCount">0</strong>Toplam stok</div></div>
+      <div class="grid">
+        <form id="productForm" class="panel">
+          <h2 id="formTitle">Yeni Ürün</h2><input id="productId" type="hidden">
+          <div class="field"><label>ÜRÜN ADI</label><input id="name" required placeholder="Örn. VNMSTR Shadow Hoodie"></div>
+          <div class="two"><div class="field"><label>KATEGORİ</label><select id="category"><option value="tshirt">T-Shirt</option><option value="oversize">Oversize T-Shirt</option><option value="hoodie">Hoodie</option><option value="sweatshirt">Sweatshirt</option><option value="esofman">Eşofman Altı</option><option value="aksesuar">Aksesuar</option></select></div><div class="field"><label>FİYAT (TL)</label><input id="price" type="number" min="0" step="0.01" required></div></div>
+          <div class="field"><label>AÇIKLAMA</label><textarea id="description" rows="3" placeholder="Kalıp, kumaş ve ürün özellikleri"></textarea></div>
+          <div class="field"><label>ÜRÜN FOTOĞRAFI</label><input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="upload-note">JPG, PNG veya WEBP. Yeni fotoğraf seçmezsen mevcut fotoğraf korunur.</div></div>
+          <div class="field"><label>BEDEN STOKLARI</label><div class="sizes"><input id="sizeS" type="number" min="0" value="0" title="S"><input id="sizeM" type="number" min="0" value="0" title="M"><input id="sizeL" type="number" min="0" value="0" title="L"><input id="sizeXL" type="number" min="0" value="0" title="XL"><input id="sizeXXL" type="number" min="0" value="0" title="XXL"></div><div class="sizes upload-note"><span>S</span><span>M</span><span>L</span><span>XL</span><span>XXL</span></div></div>
+          <div class="checks"><label><input id="isActive" type="checkbox" checked> Yayında</label><label><input id="isFeatured" type="checkbox"> Öne çıkan</label></div>
+          <div class="actions"><button class="btn" type="submit">ÜRÜNÜ KAYDET</button><button id="cancelEdit" class="btn secondary hidden" type="button">VAZGEÇ</button></div><div id="formMessage" class="message"></div>
+        </form>
+        <section class="panel"><h2>Ürünler</h2><div id="productList" class="products"><div class="empty">Ürünler yükleniyor…</div></div></section>
+      </div>
+    </section>
+  </main>
+  <script>
+    const SUPABASE_URL='https://lwlnipsjaeprbbkgxygs.supabase.co';
+    const SUPABASE_KEY='sb_publishable_JdsibvQdUn3989iovGd94A_CSz974vM';
+    const ADMIN_EMAIL='ahmetkbrc45@gmail.com';
+    const db=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+    const $=id=>document.getElementById(id); let products=[];
+    const money=n=>new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY',maximumFractionDigits:2}).format(Number(n||0));
+    const slugify=s=>s.toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ı/g,'i').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+
+    async function showSession(session){
+      const allowed=session?.user?.email?.toLowerCase()===ADMIN_EMAIL;
+      $('loginView').classList.toggle('hidden',allowed); $('dashboard').classList.toggle('hidden',!allowed);
+      if(session && !allowed){await db.auth.signOut();$('loginMessage').textContent='Bu hesap yönetici olarak yetkili değil.';}
+      if(allowed)loadProducts();
+    }
+    $('loginButton').onclick=async()=>{
+      const email=$('loginEmail').value.trim().toLowerCase(); if(email!==ADMIN_EMAIL){$('loginMessage').textContent='Bu e-posta yönetici olarak kayıtlı değil.';return;}
+      $('loginButton').disabled=true;$('loginMessage').textContent='Gönderiliyor…';
+      const {error}=await db.auth.signInWithOtp({email,options:{emailRedirectTo:'https://venomstr.github.io/admin.html'}});
+      $('loginMessage').textContent=error?error.message:'Giriş bağlantısı e-postana gönderildi. E-postadaki bağlantıya tıkla.';$('loginButton').disabled=false;
+    };
+    $('logoutButton').onclick=()=>db.auth.signOut(); db.auth.onAuthStateChange((_e,s)=>showSession(s)); db.auth.getSession().then(({data})=>showSession(data.session));
+
+    async function loadProducts(){
+      const {data,error}=await db.from('products').select('*').order('sort_order').order('created_at');
+      if(error){$('productList').innerHTML='<div class="empty">'+error.message+'</div>';return;} products=data||[];renderProducts();
+    }
+    function renderProducts(){
+      $('totalCount').textContent=products.length;$('activeCount').textContent=products.filter(p=>p.is_active).length;$('stockCount').textContent=products.reduce((a,p)=>a+Object.values(p.sizes||{}).reduce((x,y)=>x+Number(y||0),0),0);
+      $('productList').innerHTML=products.length?products.map(p=>`<article class="product"><img src="${p.image_url||''}" alt=""><div><h3>${p.name}</h3><div class="tags"><span class="tag">${money(p.price)}</span><span class="tag">${p.category}</span><span class="tag">${p.is_active?'Yayında':'Gizli'}</span></div></div><div class="rowactions"><button class="iconbtn" onclick="editProduct('${p.id}')">Düzenle</button><button class="iconbtn" onclick="toggleProduct('${p.id}',${!p.is_active})">${p.is_active?'Gizle':'Yayınla'}</button><button class="iconbtn" onclick="deleteProduct('${p.id}')">Sil</button></div></article>`).join(''):'<div class="empty">Henüz ürün yok.</div>';
+    }
+    function editProduct(id){const p=products.find(x=>x.id===id);if(!p)return;$('productId').value=p.id;$('name').value=p.name;$('category').value=p.category;$('price').value=p.price;$('description').value=p.description||'';$('sizeS').value=p.sizes?.S||0;$('sizeM').value=p.sizes?.M||0;$('sizeL').value=p.sizes?.L||0;$('sizeXL').value=p.sizes?.XL||0;$('sizeXXL').value=p.sizes?.XXL||0;$('isActive').checked=p.is_active;$('isFeatured').checked=p.is_featured;$('formTitle').textContent='Ürünü Düzenle';$('cancelEdit').classList.remove('hidden');scrollTo({top:0,behavior:'smooth'});}
+    function resetForm(){$('productForm').reset();$('productId').value='';$('formTitle').textContent='Yeni Ürün';$('isActive').checked=true;$('cancelEdit').classList.add('hidden');$('formMessage').textContent='';} $('cancelEdit').onclick=resetForm;
+    async function uploadImage(file){const ext=file.name.split('.').pop().toLowerCase();const path=`${Date.now()}-${crypto.randomUUID()}.${ext}`;const {error}=await db.storage.from('product-images').upload(path,file,{cacheControl:'3600',upsert:false});if(error)throw error;return db.storage.from('product-images').getPublicUrl(path).data.publicUrl;}
+    $('productForm').onsubmit=async e=>{e.preventDefault();const form=e.currentTarget;form.classList.add('busy');$('formMessage').textContent='Kaydediliyor…';try{const id=$('productId').value;const old=products.find(p=>p.id===id);let image_url=old?.image_url||null;const file=$('imageFile').files[0];if(file)image_url=await uploadImage(file);const payload={name:$('name').value.trim(),slug:id?old.slug:slugify($('name').value)+'-'+Date.now().toString().slice(-5),category:$('category').value,price:Number($('price').value),description:$('description').value.trim(),image_url,sizes:{S:+$('sizeS').value||0,M:+$('sizeM').value||0,L:+$('sizeL').value||0,XL:+$('sizeXL').value||0,XXL:+$('sizeXXL').value||0},is_active:$('isActive').checked,is_featured:$('isFeatured').checked};const q=id?db.from('products').update(payload).eq('id',id):db.from('products').insert(payload);const {error}=await q;if(error)throw error;resetForm();await loadProducts();$('formMessage').textContent='Ürün başarıyla kaydedildi.';}catch(err){$('formMessage').textContent=err.message;}finally{form.classList.remove('busy');}};
+    async function toggleProduct(id,state){const {error}=await db.from('products').update({is_active:state}).eq('id',id);if(error)alert(error.message);else loadProducts();}
+    async function deleteProduct(id){if(!confirm('Bu ürünü kalıcı olarak silmek istiyor musun?'))return;const {error}=await db.from('products').delete().eq('id',id);if(error)alert(error.message);else loadProducts();}
+  </script>
+</body>
+</html>
