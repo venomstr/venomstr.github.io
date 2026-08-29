@@ -278,6 +278,23 @@
 
     .cart-feedback.show { display: block; }
 
+    .go-cart-button {
+      display: none;
+      margin-top: 10px;
+      padding: 15px 18px;
+      border: 1px solid #050505;
+      background: #050505;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: .05em;
+      transition: .2s;
+    }
+
+    .go-cart-button.show { display: block; }
+    .go-cart-button:hover { background: #00f598; border-color: #00f598; color: #00140c; }
+
     @media (max-width: 560px) {
       .purchase-actions { grid-template-columns: 1fr; }
     }
@@ -527,6 +544,7 @@
           <a class="order-button" id="whatsappOrderButton" href="#" target="_blank" rel="noopener noreferrer">WHATSAPP'TAN SİPARİŞ VER</a>
         </div>
         <div class="cart-feedback" id="cartFeedback" role="status" aria-live="polite"></div>
+        <a class="go-cart-button" id="goCartButton" href="index.html?cart=open">SEPETE GİT →</a>
 
         <ul class="features">
           <li>Premium pamuklu kumaş</li>
@@ -623,7 +641,7 @@
       feedback.textContent = productData.name + ' · ' + selectedSize() + ' beden sepete eklendi.';
       feedback.classList.add('show');
       this.textContent = '✓ SEPETE EKLENDİ';
-      setTimeout(function(){ window.location.href = 'index.html?cart=open'; }, 250);
+      document.getElementById('goCartButton').classList.add('show');
     });
 
     updateWhatsAppLink();
