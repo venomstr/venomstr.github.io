@@ -299,6 +299,19 @@
       .purchase-actions { grid-template-columns: 1fr; }
     }
 
+
+    .stock-status { margin-top:12px; min-height:20px; color:#555; font-size:13px; font-weight:700; }
+    .size input:disabled + span { opacity:.35; cursor:not-allowed; text-decoration:line-through; background:#e8e8e8; }
+    .product-accordion { margin-top:32px; border-top:1px solid #cfcfcf; }
+    .product-accordion details { border-bottom:1px solid #cfcfcf; }
+    .product-accordion summary { list-style:none; cursor:pointer; padding:20px 2px; font-weight:900; font-size:14px; letter-spacing:.04em; display:flex; align-items:center; justify-content:space-between; }
+    .product-accordion summary::-webkit-details-marker { display:none; }
+    .product-accordion summary::after { content:'+'; color:#00a95b; font-size:24px; line-height:1; }
+    .product-accordion details[open] summary::after { content:'−'; }
+    .accordion-content { padding:0 2px 20px; color:#444; line-height:1.75; font-size:14px; }
+    .accordion-content ul { margin:0; padding-left:20px; }
+    .accordion-content strong { color:#111; }
+
     .features {
       margin-top: 32px;
       list-style: none;
@@ -536,6 +549,7 @@
           </label>
 
         </div>
+        <p class="stock-status" id="stockStatus">Stok bilgisi kontrol ediliyor…</p>
 
         <div class="purchase-actions">
           <button class="add-cart-button" id="addCartButton" type="button">SEPETE EKLE</button>
@@ -544,18 +558,35 @@
         <div class="cart-feedback" id="cartFeedback" role="status" aria-live="polite"></div>
         <a class="go-cart-button" id="goCartButton" href="index.html?cart=open">SEPETE GİT →</a>
 
-        <ul class="features">
-          <li>Premium pamuklu kumaş</li>
-          <li>Rahat oversize kalıp</li>
-          <li>Dayanıklı neon kobra baskısı</li>
-          <li>Unisex streetwear tasarım</li>
-          <li>30°C'de ters çevirerek yıkamaya uygun</li>
-        </ul>
 
-        <div class="shipping">
-          <strong>Hızlı teslimat:</strong>
-          Manisa merkezde uygun siparişlerde gün içi teslimat.
-          Türkiye'nin 81 iline güvenli kargo.
+        <div class="product-accordion">
+          <details open>
+            <summary>ÜRÜN ÖZELLİKLERİ</summary>
+            <div class="accordion-content">
+              <ul>
+                <li>Premium, tok dokulu pamuklu kumaş</li>
+                <li>Rahat oversize ve unisex kalıp</li>
+                <li>Yüksek dayanımlı neon kobra baskısı</li>
+                <li>Güçlendirilmiş dikiş yapısı</li>
+              </ul>
+            </div>
+          </details>
+          <details>
+            <summary>BEDEN VE ÖLÇÜ REHBERİ</summary>
+            <div class="accordion-content"><strong>S–M–L–XL–XXL</strong> beden seçenekleri mevcuttur. Oversize görünüm için normal bedeninizi, daha dengeli görünüm için bir beden küçüğünü tercih edebilirsiniz.</div>
+          </details>
+          <details>
+            <summary>YIKAMA TALİMATI</summary>
+            <div class="accordion-content">Ürünü ters çevirerek 30°C’de benzer renklerle yıkayın. Baskının uzun ömürlü olması için ağartıcı ve kurutma makinesi kullanmayın; baskı üzerine doğrudan ütü yapmayın.</div>
+          </details>
+          <details>
+            <summary>KARGO VE DEĞİŞİM</summary>
+            <div class="accordion-content">Kargo ücreti 135 TL’dir; 2.000 TL ve üzeri siparişlerde ücretsizdir. Hafta içi 18.00’e kadar verilen siparişler aynı gün kargoya verilir. Değişim talebi teslimattan sonra 1 gün içinde WhatsApp üzerinden iletilmelidir.</div>
+          </details>
+          <details>
+            <summary>SIKÇA SORULANLAR</summary>
+            <div class="accordion-content"><strong>Kalıp nasıl?</strong> Rahat oversize kalıptır.<br><strong>Ödeme nasıl?</strong> EFT / Havale veya 79,99 TL hizmet bedeliyle kapıda ödeme.<br><strong>Destek?</strong> Sipariş öncesi ve sonrası WhatsApp’tan ulaşabilirsiniz.</div>
+          </details>
         </div>
 
       </div>
@@ -610,6 +641,38 @@
 
     const productData = {"id":"494aa2b0-1366-490f-a8cb-d0419d63c88f","name":"VNMSTR Cobra Oversize T-Shirt","price":699,"image":"vnmstr-cobra.png","url":"urun-cobra.html"};
 
+
+    const SUPABASE_URL = 'https://lwlnipsjaeprbbkgxygs.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_JdsibvQdUn3989iovGd94A_CSz974vM';
+
+    async function loadStock() {
+      const status = document.getElementById('stockStatus');
+      try {
+        const response = await fetch(SUPABASE_URL + '/rest/v1/products?id=eq.' + productData.id + '&select=sizes,is_active', { headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY } });
+        if (!response.ok) throw new Error('Stok alınamadı');
+        const rows = await response.json();
+        const sizes = rows[0]?.sizes || {};
+        const managed = Object.values(sizes).some(value => Number(value) > 0);
+        if (!managed) { status.textContent = 'S–M–L–XL–XXL bedenleri mevcuttur.'; return; }
+        document.querySelectorAll('input[name="beden"]').forEach(input => {
+          const count = Number(sizes[input.value] || 0);
+          input.disabled = count < 1;
+          input.closest('.size').title = count < 1 ? 'Bu beden tükendi' : count + ' adet stokta';
+        });
+        const checked = document.querySelector('input[name="beden"]:checked');
+        if (!checked || checked.disabled) {
+          const first = document.querySelector('input[name="beden"]:not(:disabled)');
+          if (first) first.checked = true;
+        }
+        const available = Object.entries(sizes).filter(([,count]) => Number(count)>0).map(([size])=>size);
+        status.textContent = available.length ? 'Stokta: ' + available.join(' · ') : 'Bu ürün geçici olarak tükendi.';
+        const soldOut = available.length === 0;
+        document.getElementById('addCartButton').disabled = soldOut;
+        if (soldOut) document.getElementById('addCartButton').textContent = 'TÜKENDİ';
+        updateWhatsAppLink();
+      } catch (error) { status.textContent = 'S–M–L–XL–XXL bedenleri mevcuttur.'; }
+    }
+
     function selectedSize() {
       return document.querySelector('input[name="beden"]:checked')?.value || 'M';
     }
@@ -643,6 +706,7 @@
     });
 
     updateWhatsAppLink();
+    loadStock();
   </script>
 
 </body>
