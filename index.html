@@ -384,6 +384,31 @@
       gap: 22px;
     }
 
+
+    .trust-strip{display:grid;grid-template-columns:repeat(4,1fr);background:#050705;color:#fff;border-top:1px solid #123629;border-bottom:1px solid #123629}
+    .trust-item{padding:24px 18px;text-align:center;border-right:1px solid #173428}
+    .trust-item:last-child{border-right:0}
+    .trust-icon{display:block;color:#00f59b;font-size:22px;margin-bottom:9px}
+    .trust-item strong{display:block;font-size:13px;letter-spacing:.08em}
+    .trust-item small{display:block;color:#91a39a;margin-top:6px;line-height:1.45}
+    .product{position:relative;background:#070907;color:#fff;border:1px solid #1b2b24;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+    .product:hover{transform:translateY(-6px);border-color:#00f59b;box-shadow:0 18px 40px rgba(0,0,0,.2)}
+    .product-image{background:linear-gradient(145deg,#101511,#050505)}
+    .product-info{border-top:1px solid #19231e}
+    .product-price{color:#00f59b}
+    .product-badges{position:absolute;top:14px;left:14px;z-index:3;display:flex;gap:7px;flex-wrap:wrap}
+    .product-badge{background:#00f59b;color:#001a10;padding:7px 9px;font-size:10px;font-weight:900;letter-spacing:.1em}
+    .product-badge.featured{background:#fff;color:#090909}
+    .product-meta{margin-top:8px;color:#899b92;font-size:11px;font-weight:700;letter-spacing:.06em}
+    .product-stock{margin-top:9px;color:#b9c9c1;font-size:12px}
+    .product-stock::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#00f59b;margin-right:7px;box-shadow:0 0 9px #00f59b}
+    .brand-statement{position:relative;overflow:hidden;background:radial-gradient(circle at 80% 45%,#063420 0,#07150e 28%,#030504 68%);color:#fff;padding:75px 7%;border-top:1px solid #12402e;border-bottom:1px solid #12402e}
+    .brand-statement::after{content:'VNMSTR';position:absolute;right:-15px;bottom:-55px;font-size:170px;font-weight:900;letter-spacing:.05em;color:rgba(0,245,155,.045);pointer-events:none}
+    .brand-kicker{color:#00f59b;font-size:12px;font-weight:900;letter-spacing:.28em}
+    .brand-statement h2{font-size:clamp(42px,7vw,94px);line-height:.88;letter-spacing:-.05em;margin:14px 0 22px;max-width:760px}
+    .brand-statement p{color:#a9bbb2;max-width:570px;line-height:1.75;font-size:16px}
+    @media(max-width:760px){.trust-strip{grid-template-columns:1fr 1fr}.trust-item:nth-child(2){border-right:0}.trust-item{padding:18px 10px}.brand-statement{padding:55px 24px}.brand-statement::after{font-size:90px;bottom:-20px}}
+
     .product {
       background: #f7f7f7;
       overflow: hidden;
@@ -1155,6 +1180,15 @@
       <p>Premium kalite, güçlü stil.</p>
     </section>
 
+
+    <section class="trust-strip" aria-label="Alışveriş avantajları">
+      <div class="trust-item"><span class="trust-icon">✦</span><strong>AYNI GÜN KARGO</strong><small>Hafta içi 18.00’a kadar</small></div>
+      <div class="trust-item"><span class="trust-icon">₺</span><strong>ÜCRETSİZ KARGO</strong><small>2.000 TL ve üzeri</small></div>
+      <div class="trust-item"><span class="trust-icon">↻</span><strong>KOLAY DEĞİŞİM</strong><small>WhatsApp üzerinden destek</small></div>
+      <div class="trust-item"><span class="trust-icon">✓</span><strong>GÜVENLİ SİPARİŞ</strong><small>EFT / Havale · Kapıda ödeme</small></div>
+    </section>
+
+
     <section class="products" id="urunler">
       <div id="disgiyim" aria-hidden="true"></div>
       <div class="section-head">
@@ -1206,6 +1240,14 @@
         </article>
       </div>
     </section>
+
+
+    <section class="brand-statement">
+      <div class="brand-kicker">VENOM STR — EST. 2026</div>
+      <h2>FEAR THE BITE.</h2>
+      <p>Kalabalığa karışmak için değil, iz bırakmak için tasarlandı. Güçlü grafikler, karanlık siluetler ve yeni nesil streetwear.</p>
+    </section>
+
 
     <section class="store-info" id="bilgiler">
       <div class="store-info-head">
@@ -1334,7 +1376,7 @@
     const CLOUD_URL='https://lwlnipsjaeprbbkgxygs.supabase.co';
     const CLOUD_KEY='sb_publishable_JdsibvQdUn3989iovGd94A_CSz974vM';
     const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
-    function cloudCard(p){const detail=p.slug==='vnmstr-streetwear-tshirt'?'urun.html':p.slug==='vnmstr-cobra-oversize-tshirt'?'urun-cobra.html':'#urunler';return '<article class="product" data-category="'+escapeHtml(p.category)+'" data-id="'+escapeHtml(p.id)+'" data-name="'+escapeHtml(p.name)+'" data-price="'+Number(p.price)+'" data-image="'+escapeHtml(p.image_url||'')+'" data-url="'+detail+'"><a class="product-link" href="'+detail+'" aria-label="'+escapeHtml(p.name)+' ürün detayını aç"><div class="product-image"><img src="'+escapeHtml(p.image_url||'')+'" alt="'+escapeHtml(p.name)+'" loading="lazy"></div><div class="product-info"><div class="product-name">'+escapeHtml(p.name)+'</div><div class="product-price">'+money(Number(p.price))+'</div></div></a><div class="product-actions"><button class="favorite-btn" type="button" aria-label="Favorilere ekle" title="Favorilere ekle">♡</button><button class="cart-btn" type="button">Sepete Ekle</button></div></article>';}
+    function cloudCard(p){const detail=p.slug==='vnmstr-streetwear-tshirt'?'urun.html':p.slug==='vnmstr-cobra-oversize-tshirt'?'urun-cobra.html':'#urunler';const sizes=p.sizes||{};const activeSizes=Object.entries(sizes).filter(([,n])=>Number(n)>0).map(([s])=>s);const stockText=activeSizes.length?'Stokta: '+activeSizes.join(' · '):'S–XXL bedenler mevcut';const badges='<div class="product-badges"><span class="product-badge">YENİ</span>'+(p.is_featured?'<span class="product-badge featured">ÖNE ÇIKAN</span>':'')+'</div>';return '<article class="product" data-category="'+escapeHtml(p.category)+'" data-id="'+escapeHtml(p.id)+'" data-name="'+escapeHtml(p.name)+'" data-price="'+Number(p.price)+'" data-image="'+escapeHtml(p.image_url||'')+'" data-url="'+detail+'">'+badges+'<a class="product-link" href="'+detail+'" aria-label="'+escapeHtml(p.name)+' ürün detayını aç"><div class="product-image"><img src="'+escapeHtml(p.image_url||'')+'" alt="'+escapeHtml(p.name)+'" loading="lazy"></div><div class="product-info"><div class="product-name">'+escapeHtml(p.name)+'</div><div class="product-meta">'+escapeHtml(p.category)+' · UNISEX</div><div class="product-price">'+money(Number(p.price))+'</div><div class="product-stock">'+stockText+'</div></div></a><div class="product-actions"><button class="favorite-btn" type="button" aria-label="Favorilere ekle" title="Favorilere ekle">♡</button><button class="cart-btn" type="button">Sepete Ekle</button></div></article>';}
     async function loadCloudProducts(){try{const response=await fetch(CLOUD_URL+'/rest/v1/products?select=*&is_active=eq.true&order=sort_order.asc,created_at.asc',{headers:{apikey:CLOUD_KEY}});if(!response.ok)throw new Error('Ürünler alınamadı');const rows=await response.json();if(!rows.length)return;document.getElementById('productGrid').innerHTML=rows.map(cloudCard).join('');products=rows.map(p=>({id:p.id,name:p.name,price:Number(p.price),image:p.image_url||'',url:p.slug==='vnmstr-streetwear-tshirt'?'urun.html':p.slug==='vnmstr-cobra-oversize-tshirt'?'urun-cobra.html':'#urunler',category:p.category,sizes:p.sizes||{},card:document.querySelector('[data-id="'+p.id+'"]')}));const valid=new Set(products.map(p=>p.id));favorites=favorites.filter(id=>valid.has(id));cart=cart.filter(id=>valid.has(id));bindProductActions();persist();if(new URLSearchParams(location.search).get('cart')==='open')openDrawer('cart');}catch(error){console.warn('VENOM STR ürün verisi:',error.message);}}
 
     const menuToggle=document.getElementById('menuToggle');
@@ -1368,7 +1410,7 @@
       </div>
       <div class="footer-links">
         <h3>Alışveriş Rehberi</h3>
-        <a href="#kargo">Kargo ve Teslimat</a><a href="#odeme">Ödeme</a><a href="#degisim">Değişim Koşulları</a>
+        <a href="#kargo">Kargo ve Teslimat</a><a href="#odeme">Ödeme</a><a href="#degisim">Değişim Koşulları</a><a href="#bilgiler">Sıkça Sorulanlar</a>
       </div>
       <div>
         <h3>İletişim</h3>
